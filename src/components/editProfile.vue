@@ -16,6 +16,8 @@
       the information you entered is not valid, please check the information you
       just entered
     </h2>
+
+    
   </div>
 </template>
 
@@ -62,7 +64,9 @@ export default {
         .catch(() => {
           this.err = true;
         });
-    }
+    },
+
+    
   }
 };
 </script>
