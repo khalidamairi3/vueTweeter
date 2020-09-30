@@ -1,53 +1,34 @@
 <template>
   <div>
-    <h1>Sign Up Page</h1>
-
-    <input type="text" placeholder="Email" v-model="email" />
+    <h1>LogIn</h1>
+    <input type="text" placeholder="email" v-model="email" />
     <br />
-    <input type="password" placeholder="Password" v-model="password" />
-    <br />
-    <input type="text" placeholder="username" v-model="username" />
-    <br />
-    <textarea type="text" placeholder="bio" v-model="bio" />
-    <br />
-    <input type="text" placeholder="birthdate yyyy-mm-dd" v-model="birthdate" />
-    <br />
-    <button @click="signUp" type="submit">sign up</button>
-    <h2 v-if="err">
-      the information you entered is not valid, please check the information you
-      just entered
-    </h2>
+    <input type="ppassword" placeholder="password" v-model="password" />
+    <button @click="login">Login</button>
   </div>
 </template>
 
 <script>
 import axios from "axios";
 import cookies from "vue-cookies";
-
 export default {
-  name: "signup-form",
+  name: "signin-page",
   data() {
     return {
       email: "",
       password: "",
-      username: "",
-      bio: "",
-      birthdate: "",
       err: false
     };
   },
   methods: {
-    signUp() {
+    login() {
       axios
         .request({
-          url: "https://tweeterest.ml/api/users",
+          url: "https://tweeterest.ml/api/login",
           method: "POST",
           data: {
             email: this.email,
-            password: this.password,
-            username: this.username,
-            bio: this.bio,
-            birthdate: this.birthdate
+            password: this.password
           },
           headers: {
             "Content-Type": "application/json",
@@ -70,5 +51,6 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="sass" scoped>
+
 </style>
