@@ -3,7 +3,7 @@
     <h1>LogIn</h1>
     <input type="text" placeholder="email" v-model="email" />
     <br />
-    <input type="ppassword" placeholder="password" v-model="password" />
+    <input type="password" placeholder="password" v-model="password" />
     <button @click="login">Login</button>
   </div>
 </template>
@@ -40,6 +40,7 @@ export default {
           if (response.data.loginToken != undefined) {
             cookies.set("token", response.data.loginToken);
             this.$store.commit("setUser", response.data);
+            this.$store.dispatch("getFollowing");
             this.err = false;
           }
         })

@@ -1,0 +1,49 @@
+<template>
+  <div>
+      <h2 v-if="tweets.length ==0"> you have no tweets to display </h2>
+    <tweetDisplay v-for="tweet in tweets" :key =" tweet.tweetId " :tweet = tweet />
+  </div>
+</template>
+
+<script>
+import axios from "axios";
+import tweetDisplay from "./tweet.vue";
+export default {
+  name: "home-tweets",
+  components: {
+    tweetDisplay
+  },
+  data() {
+    return {
+      tweets: []
+    };
+  },
+  mounted() {
+    for (let i = 0; i < this.followingUsers.length; i++) {
+      axios.request({
+        url: "https://tweeterest.ml/api/tweets",
+        method: "GET",
+        data: {
+          userId: this.followingUsers[i].userId
+        },
+        headers: {
+          "Content-Type": "application/json",
+          "X-Api-Key": "ZbUbhpzNbCXwE9Cbn4nK9zYQT1aNxPuRXkYLjJB7pqa67"
+        }
+      }).then((resonse)=>{
+          this.tweets=this.tweets.concat(resonse.data);
+
+      });
+    }
+  },
+  computed: {
+    followingUsers() {
+      return this.$store.state.followingUsers;
+    }
+  }
+};
+</script>
+
+<style lang="sass" scoped>
+
+</style>
