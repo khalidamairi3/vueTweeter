@@ -1,8 +1,12 @@
 <template>
   <div>
-      <deleteProfile/>
+    
+    <deleteProfile/>
     
     <editProfile />
+    <h1>{{ user.username}}</h1>
+    <h1> {{ user.email}}</h1>
+    <h1>{{user.bio}}</h1>
   </div>
 </template>
 
@@ -14,6 +18,11 @@ export default {
   components: {
     editProfile,
     deleteProfile
+  },
+  computed: {
+    user() {
+      return this.$store.state.user;
+    }
   },
   
   
