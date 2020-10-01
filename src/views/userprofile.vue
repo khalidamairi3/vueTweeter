@@ -26,7 +26,7 @@ export default {
       url: "https://tweeterest.ml/api/tweets",
       method: "GET",
       data: {
-        userId: this.user.userId
+        userId: this.userId
       },
       headers: {
         "Content-Type": "application/json",
@@ -46,7 +46,7 @@ export default {
     };
   },
   computed: {
-    user() {
+    userId() {
       return this.$store.state.selectedUser;
     }
   }

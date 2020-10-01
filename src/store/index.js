@@ -9,7 +9,7 @@ export default new Vuex.Store({
     user:{},
     followingUsers:[],
     followersUsers : [],
-    selectedUser:{},
+    selectedUser:0,
   },
   mutations: {
     setUser : function(state,user){
