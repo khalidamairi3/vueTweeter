@@ -4,6 +4,7 @@ import signupPage from "../views/signup.vue";
 import signinPage from "../views/signIn.vue";
 import profilePage from "../views/profile.vue";
 import HomeePage from "../views/home.vue";
+import discoverPage from "../views/discoverPage.vue";
 Vue.use(VueRouter);
 
 const routes = [
@@ -12,6 +13,13 @@ const routes = [
     name: "signup-page",
     component: signupPage
   },
+
+  {
+    path: "/discover",
+    name: "discover-page",
+    component: discoverPage
+  },
+
   {
     path: "/signin",
     name: "signin-page",

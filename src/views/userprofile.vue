@@ -4,7 +4,7 @@
     <h1>{{ user.email }}</h1>
     <h1>{{ user.bio }}</h1>
 
-    <tweetDisplay v-for="tweet in tweets" :key="tweet.id" :tweet = tweet />
+    <tweetDisplay v-for="tweet in tweets" :key="tweet.id" :Tweet = tweet />
 
     <h2 v-if="err"> Somthing went Wrong while downloading the tweets</h2>
 

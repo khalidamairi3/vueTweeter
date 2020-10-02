@@ -17,8 +17,8 @@
       <button @click="edit(tweet.tweetId, content)">Edit</button>
       <h3 v-if="err"> the tweet has a limit of 200 characters </h3>
     </div>
-    <p v-if="!viewComments" @click="viewComents = true"> view comments</p>
-    <p v-if="viewComments" @click="viewComents = false"> hide comments</p>
+    <p v-if="!viewComments" @click="viewComments = true"> view comments</p>
+    <p v-if="viewComments" @click="viewComments = false"> hide comments</p>
     <tweetComments v-if="viewComments"/>
     
   </div>
@@ -35,7 +35,7 @@ export default {
       tweetComments,
   },
   props: {
-    tweet: {
+    Tweet: {
       type: Object,
       required: true
     }
@@ -46,6 +46,7 @@ export default {
   },
   data() {
     return {
+      tweet:this.Tweet,
       isuser: false,
       toEdit: false,
       content: "",
@@ -75,7 +76,8 @@ export default {
           "Content-Type": "application/json",
           "X-Api-Key": "ZbUbhpzNbCXwE9Cbn4nK9zYQT1aNxPuRXkYLjJB7pqa67"
         }
-      }).then(()=>{
+      }).then((response)=>{
+          this.tweet=response.data
           this.err = false;
           this.toEdit =false;
       }).catch(()=>{

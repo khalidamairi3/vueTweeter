@@ -9,6 +9,7 @@ export default new Vuex.Store({
     user:{},
     followingUsers:[],
     followersUsers : [],
+    allUsers:[],
     selectedUser:0,
   },
   mutations: {
@@ -18,16 +19,20 @@ export default new Vuex.Store({
     updateFollowing:function(state,data){
       state.followingUsers=data;
     },
+    updateUsers:function(state,data){
+      state.allUsers=data;
+    },
     userToShow(state,user){
       state.selectedUser = user;
     }
   },
   actions: {
     getFollowing(context){
+      console.log(context.state.user.userId);
       axios.request({
         url:"https://tweeterest.ml/api/follows",
         method: "GET",
-        data:{
+        params:{
           userId : context.state.user.userId,
         },
         headers: {
@@ -36,10 +41,36 @@ export default new Vuex.Store({
         }
       }).then((response)=>{
         this.commit("updateFollowing",response.data);
+      }).catch((error)=>{
+        console.log(error);
       })
 
 
+    },
+    getAllusers(){
+      axios.request({
+        url:"https://tweeterest.ml/api/users",
+        method: "GET",
+        headers: {
+          "X-Api-Key": "ZbUbhpzNbCXwE9Cbn4nK9zYQT1aNxPuRXkYLjJB7pqa67"
+        }
+      }).then((response)=>{
+        this.commit("updateUsers",response.data);
+      }).catch((error)=>{
+        console.log(error);
+      })
+      
+      
     }
   },
+  getters : {
+    getOtherUsers: function(state){
+      return state.allUsers.filter(function(user){
+        return user.userId != state.user.userId ;
+
+      })
+    }
+  },
+
   modules: {}
 });

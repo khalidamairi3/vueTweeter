@@ -41,6 +41,7 @@ export default {
             cookies.set("token", response.data.loginToken);
             this.$store.commit("setUser", response.data);
             this.$store.dispatch("getFollowing");
+            this.$store.dispatch("getAllusers");
             this.err = false;
           }
         })

@@ -1,7 +1,7 @@
 <template>
   <div>
       <h2 v-if="tweets.length ==0"> you have no tweets to display </h2>
-    <tweetDisplay v-for="tweet in tweets" :key =" tweet.tweetId " :tweet = tweet />
+    <tweetDisplay v-for="tweet in tweets" :key =" tweet.tweetId " :Tweet = tweet />
   </div>
 </template>
 
@@ -23,7 +23,7 @@ export default {
       axios.request({
         url: "https://tweeterest.ml/api/tweets",
         method: "GET",
-        data: {
+        params: {
           userId: this.followingUsers[i].userId
         },
         headers: {
