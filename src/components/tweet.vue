@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1 @click="slectUser(tweet.userId)">{{ tweet.username }}</h1>
+    <h1 @click="selectUser(tweet.userId)">{{ tweet.username }}</h1>
     <h2>{{ tweet.createdAt }}</h2>
     <h3>{{ tweet.content }}</h3>
 

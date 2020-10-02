@@ -5,6 +5,7 @@ import signinPage from "../views/signIn.vue";
 import profilePage from "../views/profile.vue";
 import HomeePage from "../views/home.vue";
 import discoverPage from "../views/discoverPage.vue";
+import userProfile from "../views/userprofile";
 Vue.use(VueRouter);
 
 const routes = [
@@ -12,6 +13,11 @@ const routes = [
     path: "/signup",
     name: "signup-page",
     component: signupPage
+  },
+  {
+    path: "/userprofile",
+    name: "user-profile",
+    component: userProfile
   },
 
   {
