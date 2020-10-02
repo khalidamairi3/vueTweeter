@@ -24,6 +24,14 @@ export default new Vuex.Store({
     },
     userToShow(state,user){
       state.selectedUser = user;
+    },
+    addFollowing(state,user){
+      state.followingUsers.push(user)
+    },
+    removeFollowing(state,user){
+      state.followingUsers=state.followingUsers.filter(function(user_f){
+        return user_f != user;
+      })
     }
   },
   actions: {
@@ -69,6 +77,15 @@ export default new Vuex.Store({
         return user.userId != state.user.userId ;
 
       })
+    },
+    checkFollowing:function(state){
+      for(let i=0;i<state.followingUsers;i++){
+        if(state.followingUsers[i]==state.selectedUser)
+        {
+          return true;
+        }
+      }
+      return false;
     }
   },
 

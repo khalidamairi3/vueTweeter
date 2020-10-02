@@ -6,6 +6,7 @@
     <h1>{{ user.username }}</h1>
     <h1>{{ user.email }}</h1>
     <h1>{{ user.bio }}</h1>
+   
     <tweetDisplay v-for="tweet in tweets" :key="tweet.id" :Tweet = tweet />
     <h2 v-if="err"> Something Went Wrong</h2>
   </div>
@@ -16,6 +17,7 @@ import editProfile from "../components/editProfile";
 import deleteProfile from "../components/deleteProfile";
 import tweetDisplay from "../components/tweet";
 import axios from "axios";
+
 export default {
   name: "profile-page",
   components: {
@@ -50,8 +52,10 @@ export default {
   computed: {
     user() {
       return this.$store.state.user;
-    }
-  }
+    },
+   
+  },
+
 };
 </script>
 
