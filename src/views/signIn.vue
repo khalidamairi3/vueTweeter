@@ -57,17 +57,9 @@ export default {
 };
 </script>
 
-<style lang="scss" >
+<style lang="scss" scoped>
 
-@import url('https://fonts.googleapis.com/css2?family=Dosis:wght@500&display=swap');
 
-body{
-    height: 100vh;
-    display: grid;
-    justify-items: center;
-    align-items: center;
-    font-family: 'Dosis', sans-serif;
-}
 #login {
     text-transform: capitalize;
     letter-spacing: 0.4vw;
@@ -102,6 +94,7 @@ body{
             background-color:white;
             color: #00CECB;
             transition: all 0.2s ease-in;
+            box-shadow: 2px 2px #92B4A7;
             
 
         }
