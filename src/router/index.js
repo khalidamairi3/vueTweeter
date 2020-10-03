@@ -37,7 +37,7 @@ const routes = [
     component: profilePage
   },
   {
-    path: "/",
+    path: "/home",
     name: "home-page",
     component: HomeePage
   },

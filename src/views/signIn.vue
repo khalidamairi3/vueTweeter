@@ -1,10 +1,14 @@
-<template>
-  <div>
-    <h1>LogIn</h1>
-    <input type="text" placeholder="email" v-model="email" />
-    <br />
-    <input type="password" placeholder="password" v-model="password" />
-    <button @click="login">Login</button>
+<template >
+  <div id="login">
+    
+    
+     <h1>LogIn</h1>
+        <label for="email"> Email </label>
+        <input type="text" v-model="email" name="email"  />
+        <br />
+        <label for="password"> Password</label>
+        <input name="password" type="password" v-model="password" />
+        <button @click="login">Login</button>
   </div>
 </template>
 
@@ -53,6 +57,56 @@ export default {
 };
 </script>
 
-<style lang="sass" scoped>
+<style lang="scss" >
+
+@import url('https://fonts.googleapis.com/css2?family=Dosis:wght@500&display=swap');
+
+body{
+    height: 100vh;
+    display: grid;
+    justify-items: center;
+    align-items: center;
+    font-family: 'Dosis', sans-serif;
+}
+#login {
+    text-transform: capitalize;
+    letter-spacing: 0.4vw;
+    height: 50%;
+    width: 90%;
+    display: grid;
+    justify-items: center;
+    align-items: center;
+    border-radius: 15px 15px 15px 15px;
+    border: 1px solid #92B4A7;
+    
+
+    input{
+        
+        width: 90%;
+        height: 6vh;
+        border-radius: 10px 10px 10px 10px;
+        font-family: 'Courier New', Courier, monospace;
+    }
+    button{
+        margin-top: 2vh;
+        width: 40%;
+        height: 6vh;
+        background-color: #00CECB;
+        color: white;
+        border-radius: 15px 15px 15px 15px;
+        border: 1px solid  #00CECB ;
+        
+
+        &:hover{
+            border: 1px solid  #00CECB ;
+            background-color:white;
+            color: #00CECB;
+            transition: all 0.2s ease-in;
+            
+
+        }
+    }
+
+}
 
 </style>
