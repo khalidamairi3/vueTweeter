@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div id="discoverPage">
         <dicoverComponent/>
 
     </div>
@@ -17,5 +17,9 @@ import dicoverComponent from "../components/discover"
 </script>
 
 <style lang="scss" scoped>
+
+#discoverPage{
+    width: 100%;
+}
 
 </style>
