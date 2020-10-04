@@ -27,14 +27,14 @@
     <p v-if="!viewComments" @click="viewComments = true">view comments</p>
     <p v-if="viewComments" @click="viewComments = false">hide comments</p>
 
-    <tweetComments v-if="viewComments" />
+    <tweetComments v-if="viewComments" :tweetId= tweet.tweetId />
   </div>
 </template>
 
 <script>
 import tweetComments from "./comments";
 import axios from "axios";
-import cooikes from "vue-cookies";
+import cookies from "vue-cookies";
 
 export default {
   name: "tweet-display",
@@ -109,7 +109,7 @@ export default {
           url: "https://tweeterest.ml/api/tweets",
           method: "PATCH",
           data: {
-            loginToken: cooikes.get("token"),
+            loginToken: cookies.get("token"),
             tweetId: tweetId,
             content: content
           },
@@ -133,7 +133,7 @@ export default {
           url: "https://tweeterest.ml/api/tweets",
           method: "DELETE",
           data: {
-            loginToken: cooikes.get("token"),
+            loginToken: cookies.get("token"),
             tweetId: tweetId
           },
           headers: {
@@ -150,7 +150,7 @@ export default {
                 url:"https://tweeterest.ml/api/tweet-likes",
                 method:"POST",
                 data:{
-                    loginToken:cooikes.get("token"),
+                    loginToken:cookies.get("token"),
                     tweetId:tweetId
                 },
                  headers: {
@@ -169,7 +169,7 @@ export default {
                 url:"https://tweeterest.ml/api/tweet-likes",
                 method:"DELETE",
                 data:{
-                    loginToken:cooikes.get("token"),
+                    loginToken:cookies.get("token"),
                     tweetId:tweetId
                 },
                  headers: {

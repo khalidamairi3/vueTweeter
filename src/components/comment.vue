@@ -1,20 +1,29 @@
 <template>
-  <div>
-    <h2>{{ comment.username }}</h2>
-    <h2>{{ comment.createdAt }}</h2>
-    <h2>{{ comment.content }}</h2>
-
+  <div id="comment">
+    <p class="username" @click="selectUser(comment.userId)">
+      {{ comment.username }}
+    </p>
+    <p class="date">{{ comment.createdAt }}</p>
     <div v-if="user.userId == comment.userId">
-      <button @click="edit">Edit</button>
-      <button @click="Delete(comment.commentId)">Delete</button>
+      <i id="myBtn" class="far fa-edit"></i>
+      <i @click="Delete(comment.commentId)" class="fas fa-times"></i>
     </div>
-    <div v-if="editComment">
-      <textarea cols="30" rows="10" v-model="content"></textarea>
-      <button @click="updateComment(comment.commentId, content)">
-        Update
-      </button>
-      <h4 v-if="err"> the comment is too long </h4>
+    <div id="commentModal" class="modal">
+      <!-- Modal content >-- -->
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <p>Edit your comment</p>
+        <textarea rows="5" v-model="content"></textarea>
+        <button @click="updateComment(comment.commentId, content)">Edit</button>
+        <h3 v-if="err">the comment has a limit of 200 characters</h3>
+      </div>
     </div>
+
+    <p class="content">{{ comment.content }}</p>
+    <div>
+          <i @click="like_unlike(comment.commentId)" id="like" class="like far fa-heart"></i><span class="likes">  {{likedUsers.length}}</span>
+      </div>
+    
   </div>
 </template>
 
@@ -29,11 +38,35 @@ export default {
       required: true
     }
   },
+  mounted () {
+    axios.request({
+      url:"https://tweeterest.ml/api/comment-likes",
+      method: "GET",
+      params:{
+        commmentId:this.comment.commmentId
+      },
+           headers: {
+            "Content-Type": "application/json",
+            "X-Api-Key": "ZbUbhpzNbCXwE9Cbn4nK9zYQT1aNxPuRXkYLjJB7pqa67"
+          }
+    }).then((response)=>{
+      this.likedUsers=response.data;
+    }).catch(()=>{});
+       this.likedUsers.forEach(user => {
+        if(user.userId==this.user.userId){
+            document.getElementById("like").classList.remove("far");
+            document.getElementById("like").classList.add("fas");
+            this.liked=true
+        }})
+    
+  },
   data() {
     return {
-      editComment: false,
+      
       content: "",
-      err:false
+      likedUsers:[],
+      liked:false,
+      err: false
     };
   },
   computed: {
@@ -42,56 +75,199 @@ export default {
     }
   },
   methods: {
-    edit() {
-      this.editComment = true;
-    },
+    
     updateComment(id, content) {
-      axios.request({
-        url: "https://tweeterest.ml/api/comments",
-        method: "PATCH",
-        data: {
-          loginTonken: cookies.get("token"),
-          commmentId: id,
-          content: content
-        },
-        headers: {
-          "Content-Type": "application/json",
-          "X-Api-Key": "ZbUbhpzNbCXwE9Cbn4nK9zYQT1aNxPuRXkYLjJB7pqa67"
-        }
-      }).then((response)=>{
+      axios
+        .request({
+          url: "https://tweeterest.ml/api/comments",
+          method: "PATCH",
+          data: {
+            loginTonken: cookies.get("token"),
+            commmentId: id,
+            content: content
+          },
+          headers: {
+            "Content-Type": "application/json",
+            "X-Api-Key": "ZbUbhpzNbCXwE9Cbn4nK9zYQT1aNxPuRXkYLjJB7pqa67"
+          }
+        })
+        .then(response => {
           this.commment = response.data;
-          this.editComment = false;
-          this.err=false
-      }).catch(()=>{
-          this.err =true
-
-      });
+          this.err = false;
+        })
+        .catch(() => {
+          this.err = true;
+        });
     },
-    Delete (id){
-
-        axios.request({
-        url: "https://tweeterest.ml/api/comments",
-        method: "DELETE",
-        data: {
-          loginTonken: cookies.get("token"),
-          commmentId: id,
-        },
-        headers: {
-          "Content-Type": "application/json",
-          "X-Api-Key": "ZbUbhpzNbCXwE9Cbn4nK9zYQT1aNxPuRXkYLjJB7pqa67"
+    Delete(id) {
+      axios
+        .request({
+          url: "https://tweeterest.ml/api/comments",
+          method: "DELETE",
+          data: {
+            loginTonken: cookies.get("token"),
+            commmentId: id
+          },
+          headers: {
+            "Content-Type": "application/json",
+            "X-Api-Key": "ZbUbhpzNbCXwE9Cbn4nK9zYQT1aNxPuRXkYLjJB7pqa67"
+          }
+        })
+        .then(() => {})
+        .catch(() => {});
+    },
+    like_unlike(commentId) {
+        if(!this.liked){
+            axios.request({
+                url:"https://tweeterest.ml/api/comment-likes",
+                method:"POST",
+                data:{
+                    loginToken:cookies.get("token"),
+                    commentId:commentId
+                },
+                 headers: {
+            "Content-Type": "application/json",
+            "X-Api-Key": "ZbUbhpzNbCXwE9Cbn4nK9zYQT1aNxPuRXkYLjJB7pqa67"
+          }
+            }).then(()=>{
+                document.getElementById("like").classList.remove("far");
+                document.getElementById("like").classList.add("fas");
+                this.liked=true;
+                this.likedUsers.push(this.user)
+            }).catch(()=>{})
         }
-      }).then(()=>{
-          
-      }).catch(()=>{
-          
+        else{
+             axios.request({
+                url:"https://tweeterest.ml/api/comment-likes",
+                method:"DELETE",
+                data:{
+                    loginToken:cookies.get("token"),
+                    commentId:commentId
+                },
+                 headers: {
+            "Content-Type": "application/json",
+            "X-Api-Key": "ZbUbhpzNbCXwE9Cbn4nK9zYQT1aNxPuRXkYLjJB7pqa67"
+          }
+            }).then(()=>{
+                document.getElementById("like").classList.remove("fas");
+                document.getElementById("like").classList.add("far");
+                let currrentUser = this.user
+                this.liked=false
+                this.likedUsers=this.likedUsers.filter(function(user){
+                    return user.userId!=currrentUser.userId;
 
-      });
-
+                })
+            }).catch((error)=>{
+                console.log(error);
+            })
+        }
     }
   }
 };
 </script>
 
-<style lang="sass" scoped>
+<style lang="scss" scoped>
+@import url("https://use.fontawesome.com/releases/v5.15.0/css/all.css");
+@import url("https://use.fontawesome.com/releases/v5.15.0/css/v4-shims.css");
+
+#comment{
+    display: grid;
+    align-items: center;
+    grid-template-columns: 3fr 2fr 1fr;
+    width: 100%;
+    border-top: solid 1px #92B4A7;
+    .username{
+        font-weight: bold;
+        font-size: 18px;
+
+        &:hover{
+            color: #00CECB;
+            transition: all 0.1s ease-in;
+        }
+
+    }
+    .date{
+        
+        color: #92B4A7;
+        font-size: 15px;
+    }
+
+    #like{
+        color: rgb(167, 16, 16);
+    }
+    
+    .content{
+        font-size: 18px;
+        grid-column: span 3;
+
+    }
+  
+}
+
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  }
+  
+  /* Modal Content/Box */
+  .modal-content {
+    display: grid;
+    justify-content: center;
+    align-content: center;
+    background-color: #fefefe;
+    margin: 15% auto; /* 15% from the top and centered */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%; /* Could be more or less, depending on screen size */
+    letter-spacing: 0.5vw;
+    textarea{
+        width: 80%;
+    }
+    button{
+        margin-top: 2vh;
+        background-color: white;
+        height: 6vh;
+        width: 20vw;
+        background-color: #00CECB;
+        color: white;
+       
+        border: 1px solid  #00CECB ;
+        
+
+        &:hover{
+            border: 1px solid  #00CECB ;
+            background-color:white;
+            color: #00CECB;
+            transition: all 0.2s ease-in;
+            box-shadow: 2px 2px #92B4A7;
+            
+
+        }
+
+    }
+  }
+  
+  /* The Close Button */
+  .close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+  }
+  
+  .close:hover,
+  .close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+  }
 
 </style>
