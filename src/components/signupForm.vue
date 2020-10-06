@@ -67,7 +67,6 @@ export default {
           if (response.data.loginToken != undefined) {
             cookies.set("token", response.data.loginToken);
             this.$store.commit("setUser", response.data);
-            this.$store.dispatch("getFollowing");
             this.$store.dispatch("getAllusers");
             this.$router.push("/home")
             this.err = false;

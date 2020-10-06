@@ -19,6 +19,9 @@ export default new Vuex.Store({
     updateFollowing:function(state,data){
       state.followingUsers=data;
     },
+    updateFollowers : function(state,data){
+      state.followersUsers = data ;
+    },
     updateUsers:function(state,data){
       state.allUsers=data;
     },
@@ -37,7 +40,6 @@ export default new Vuex.Store({
   },
   actions: {
     getFollowing(context){
-      console.log(context.state.user.userId);
       axios.request({
         url:"https://tweeterest.ml/api/follows",
         method: "GET",
@@ -56,6 +58,26 @@ export default new Vuex.Store({
 
 
     },
+    getFollowers(context){
+      axios.request({
+        url:"https://tweeterest.ml/api/follows",
+        method: "GET",
+        params:{
+          userId : context.state.user.userId,
+        },
+        headers: {
+          "Content-Type": "application/json",
+          "X-Api-Key": "ZbUbhpzNbCXwE9Cbn4nK9zYQT1aNxPuRXkYLjJB7pqa67"
+        }
+      }).then((response)=>{
+        this.commit("updateFollowers",response.data);
+      }).catch((error)=>{
+        console.log(error);
+      })
+
+
+    },
+
     getAllusers(){
       axios.request({
         url:"https://tweeterest.ml/api/users",
