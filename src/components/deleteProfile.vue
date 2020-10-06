@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div id="deleteProfile">
         <button @click="deleteProfile">delete</button>
 
     </div>
@@ -42,6 +42,35 @@ import cookies from "vue-cookies";
     }
 </script>
 
-<style lang="sass" scoped>
+<style lang="scss" scoped>
+#deleteProfile{
+  width: 100%;
+  text-align: center;
+}
+
+ button{
+        margin-top: 2vh;
+        width: 40%;
+        height: 6vh;
+        background-color: #1DA1F2;
+        color: white;
+        border-radius: 15px 15px 15px 15px;
+        border: 1px solid  #1DA1F2 ;
+        text-transform: capitalize;
+        letter-spacing: 0.4vw;
+        margin-bottom: 2vh;
+        
+        
+
+        &:hover{
+            border: 1px solid  #1DA1F2 ;
+            background-color:white;
+            color: #1DA1F2;
+            transition: all 0.2s ease-in;
+            box-shadow: 2px 2px #AAB8C2;
+            
+
+        }
+    }
 
 </style>

@@ -3,7 +3,7 @@
     <p class="username" @click="selectUser(tweet.userId)">
       {{ tweet.username }}
     </p>
-    <p class="date">{{ tweet.created_at }}</p>
+    <p class="date">{{ tweet.createdAt }}</p>
     <div v-if="isuser">
       <i @click="editToShow()" id="myBtn" class="far fa-edit"></i>
       <i @click="Delete(tweet.tweetId)" class="fas fa-times"></i>

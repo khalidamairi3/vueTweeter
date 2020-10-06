@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="profileEdit">
        <deleteProfile />
     <editProfile />
 
@@ -19,4 +19,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+#profileEdit{
+    width: 100%;
+    display: grid;
+    justify-items: center;
+}
 </style>

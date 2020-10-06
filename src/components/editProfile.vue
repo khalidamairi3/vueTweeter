@@ -1,5 +1,6 @@
 <template>
-  <div>
+  <div id="editProfile">
+    
     <h1>edit profile</h1>
     <input type="text" placeholder="Email" v-model="email" />
     <br />
@@ -71,6 +72,61 @@ export default {
 };
 </script>
 
-<style lang="sass" scoped>
+<style lang="scss" scoped>
+
+#editProfile{
+  // width: 100%;
+    text-transform: capitalize;
+    letter-spacing: 0.8vw;
+    min-height: 80%;
+    width: 90%;
+    display: grid;
+    justify-items: center;
+    align-items: center;
+    border-radius: 15px 15px 15px 15px;
+    border: 1px solid #AAB8C2;
+    
+
+    input{
+        
+        width: 90%;
+        height: 6vh;
+        border-radius: 10px 10px 10px 10px;
+        font-family: 'Courier New', Courier, monospace;
+    }
+    textarea{
+        width: 90%;
+        height: 12vh;
+        border-radius: 10px 10px 10px 10px;
+    }
+    p{
+      color: #3E000C;
+    }
+    button{
+        margin-top: 2vh;
+        width: 40%;
+        height: 6vh;
+        background-color: #1DA1F2;
+        color: white;
+        border-radius: 15px 15px 15px 15px;
+        border: 1px solid  #1DA1F2 ;
+        text-transform: capitalize;
+        letter-spacing: 0.4vw;
+        margin-bottom: 2vh;
+        
+        
+
+        &:hover{
+            border: 1px solid  #1DA1F2 ;
+            background-color:white;
+            color: #1DA1F2;
+            transition: all 0.2s ease-in;
+            box-shadow: 2px 2px #AAB8C2;
+            
+
+        }
+    }
+
+}
 
 </style>
