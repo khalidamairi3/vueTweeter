@@ -24,6 +24,7 @@ export default new Vuex.Store({
     },
     userToShow(state,userId){
       state.selectedUser = userId;
+    
     },
     addFollowing(state,user){
       state.followingUsers.push(user)

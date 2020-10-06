@@ -1,13 +1,14 @@
 <template>
-  <div>
+  <div id="createTweet">
+      
     <textarea
       placeholder="write your tweet"
       cols="30"
-      rows="10"
+      rows="5"
       v-model="content"
     ></textarea>
-    <button @click="tweet(content)">tweet</button>
-    <h2 v-if="err"> tweet has a limit of 200 characters</h2>
+    <button @click="tweet(content)">Tweet</button>
+    <p v-if="err"> tweet has a limit of 200 characters</p>
   </div>
 </template>
 
@@ -42,7 +43,7 @@ export default {
         }
       }).then(()=>{
           this.err=false
-          this.$router.push("/");
+          
 
       }).catch(()=>{
           this.err = true;
@@ -52,6 +53,32 @@ export default {
 };
 </script>
 
-<style lang="sass" scoped>
+<style lang="scss" scoped>
+
+#createTweet{
+  display: grid;
+  textarea{
+    background-color: #F5F8FA;
+
+  }
+  button{
+    width: 25%;
+    position: relative;
+    margin-top:1vh ;
+    left: 75%;
+    float: right;
+    color: white;
+    background-color: #1DA1F2;
+    border-radius:15px ;
+    border: 1px solid #1DA1F2;
+    &:hover {
+      border: 1px solid #1DA1F2;
+      background-color: white;
+      color: #1DA1F2;
+      transition: all 0.2s ease-in;
+      box-shadow: 2px 2px #92b4a7;
+    }
+  }
+}
 
 </style>

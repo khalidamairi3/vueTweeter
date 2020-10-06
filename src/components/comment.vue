@@ -5,13 +5,13 @@
     </p>
     <p class="date">{{ comment.createdAt }}</p>
     <div v-if="user.userId == comment.userId">
-      <i id="myBtn" class="far fa-edit"></i>
+      <i @click="editToShow()" id="myBtn" class="far fa-edit"></i>
       <i @click="Delete(comment.commentId)" class="fas fa-times"></i>
     </div>
     <div id="commentModal" class="modal">
       <!-- Modal content >-- -->
       <div class="modal-content">
-        <span class="close">&times;</span>
+        <span @click="closeModal()" class="close">&times;</span>
         <p>Edit your comment</p>
         <textarea rows="5" v-model="content"></textarea>
         <button @click="updateComment(comment.commentId, content)">Edit</button>
@@ -21,7 +21,7 @@
 
     <p class="content">{{ comment.content }}</p>
     <div>
-          <i @click="like_unlike(comment.commentId)" id="like" class="like far fa-heart"></i><span class="likes">  {{likedUsers.length}}</span>
+          <i @click="like_unlike(comment.commentId)" class="fa-heart"  v-bind:class="{ fas: liked, far: !liked }"></i><span class="likes">  {{likedUsers.length}}</span>
       </div>
     
   </div>
@@ -33,7 +33,7 @@ import cookies from "vue-cookies";
 export default {
   name: "comment-display",
   props: {
-    commment: {
+    comment: {
       type: Object,
       required: true
     }
@@ -43,7 +43,7 @@ export default {
       url:"https://tweeterest.ml/api/comment-likes",
       method: "GET",
       params:{
-        commmentId:this.comment.commmentId
+        commentId:this.comment.commentID
       },
            headers: {
             "Content-Type": "application/json",
@@ -52,12 +52,15 @@ export default {
     }).then((response)=>{
       this.likedUsers=response.data;
     }).catch(()=>{});
+        let currrentUser = this.user
+        let flag = 0;
        this.likedUsers.forEach(user => {
-        if(user.userId==this.user.userId){
-            document.getElementById("like").classList.remove("far");
-            document.getElementById("like").classList.add("fas");
-            this.liked=true
+        if(user.userId==currrentUser.userId){
+            flag = 1
         }})
+        if (flag == 1){
+          this.liked =true;
+        }
     
   },
   data() {
@@ -75,45 +78,53 @@ export default {
     }
   },
   methods: {
+    selectUser(userId) {
+      this.$store.commit("userToShow", userId);
+    },
+    editToShow() {
+      document.getElementById("commentModal").style.display = "block";
+    },
+    closeModal() {
+      document.getElementById("commentModal").style.display = "none";
+    },
     
     updateComment(id, content) {
-      axios
-        .request({
+      axios.request({
           url: "https://tweeterest.ml/api/comments",
           method: "PATCH",
           data: {
-            loginTonken: cookies.get("token"),
-            commmentId: id,
+            loginToken: cookies.get("token"),
+            commentId: id,
             content: content
           },
           headers: {
             "Content-Type": "application/json",
             "X-Api-Key": "ZbUbhpzNbCXwE9Cbn4nK9zYQT1aNxPuRXkYLjJB7pqa67"
           }
-        })
-        .then(response => {
-          this.commment = response.data;
+        }).then((response) => {
+          this.closeModal();
+          this.comment.content = response.data.content;
           this.err = false;
-        })
-        .catch(() => {
+        }).catch(() => {
           this.err = true;
         });
     },
     Delete(id) {
-      axios
-        .request({
+      axios.request({
           url: "https://tweeterest.ml/api/comments",
           method: "DELETE",
           data: {
-            loginTonken: cookies.get("token"),
-            commmentId: id
+            loginToken: cookies.get("token"),
+            commentId: id
           },
           headers: {
             "Content-Type": "application/json",
             "X-Api-Key": "ZbUbhpzNbCXwE9Cbn4nK9zYQT1aNxPuRXkYLjJB7pqa67"
           }
         })
-        .then(() => {})
+        .then(() => {
+          this.comment={};
+        })
         .catch(() => {});
     },
     like_unlike(commentId) {
@@ -130,8 +141,6 @@ export default {
             "X-Api-Key": "ZbUbhpzNbCXwE9Cbn4nK9zYQT1aNxPuRXkYLjJB7pqa67"
           }
             }).then(()=>{
-                document.getElementById("like").classList.remove("far");
-                document.getElementById("like").classList.add("fas");
                 this.liked=true;
                 this.likedUsers.push(this.user)
             }).catch(()=>{})
@@ -149,8 +158,6 @@ export default {
             "X-Api-Key": "ZbUbhpzNbCXwE9Cbn4nK9zYQT1aNxPuRXkYLjJB7pqa67"
           }
             }).then(()=>{
-                document.getElementById("like").classList.remove("fas");
-                document.getElementById("like").classList.add("far");
                 let currrentUser = this.user
                 this.liked=false
                 this.likedUsers=this.likedUsers.filter(function(user){
@@ -192,7 +199,7 @@ export default {
         font-size: 15px;
     }
 
-    #like{
+    .fa-heart{
         color: rgb(167, 16, 16);
     }
     

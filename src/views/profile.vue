@@ -1,11 +1,25 @@
 <template>
-  <div>
-    <deleteProfile />
+  <div id="profile">
+   
+     <div id="cover">
+      <img src="https://besthqwallpapers.com/img/original/111844/twitter-turquoise-logo-4k-turquoise-brickwall-twitter-logo-brands.jpg" alt="porfile cover photo">
 
-    <editProfile />
-    <h1>{{ user.username }}</h1>
-    <h1>{{ user.email }}</h1>
-    <h1>{{ user.bio }}</h1>
+    </div>
+    <div id="initilals"> <h1> KA </h1>  </div>
+
+    <div id="details">
+      <p id="username" > {{ user.username }}</p>
+      <button @click="edit"> Edit </button>
+      <p id="email"> {{ user.email }}</p>
+      <p id="bio"> {{ user.bio }} </p>
+  
+    </div>
+
+
+
+    <h1></h1>
+    <h1></h1>
+    <h1></h1>
    
     <tweetDisplay v-for="tweet in tweets" :key="tweet.id" :Tweet = tweet />
     <h2 v-if="err"> Something Went Wrong</h2>
@@ -13,16 +27,13 @@
 </template>
 
 <script>
-import editProfile from "../components/editProfile";
-import deleteProfile from "../components/deleteProfile";
+
 import tweetDisplay from "../components/tweet";
 import axios from "axios";
 
 export default {
   name: "profile-page",
   components: {
-    editProfile,
-    deleteProfile,
     tweetDisplay
   },
   mounted() {
@@ -55,10 +66,74 @@ export default {
     },
    
   },
+  methods: {
+    edit() {
+
+       this.$router.push('/editProfile')
+      
+    }
+  },
+
 
 };
 </script>
 
-<style lang="sass" scoped>
+<style lang="scss" scoped>
+#profile{
+    #cover{
+        img{
+            width: 100%;
+            height: 25vh;
+            object-fit: cover;
+        }
+    }
+    #initilals{
+       
+        position: relative;
+        bottom: 5.5vh;
+        width: 10vh;
+        height: 10vh;
+        border: 1px solid #E1E8ED;
+        text-align: center;
+        // padding-top: 10%;
+        z-index: 5;
+        background-color: #E1E8ED;
+        border-radius: 200px 200px 200px 200px;
+        margin-left: 41%;
+        h1{
+            font-size: 24px;
+            letter-spacing: 0.5vw;
+        }
+    }
+    #details{
+        position: relative;
+        bottom: 10vh;
+        display: grid;
+        grid-template-columns: 3fr 1fr;
+        #username{
+            margin-left: 3vw;
+            font-weight: bolder;
+        }
+        #email, #bio {
+            grid-column: span 2;
+            margin-left: 3vw;
+        }
+        button{
+            border-radius: 50px ;
+            height: 5vh;
+            width: 80%;
+            font-size: 14px;
+            font-weight: bold;
+            border: 1px solid #E1E8ED;
+            color: #657786 ;
+            background-color: white;
+            &:hover{
+                background-color: #1DA1F2;
+                color: white;
+                transition: all 0.2s ease-in;
+            }
+        }
+    }
+}
 
 </style>

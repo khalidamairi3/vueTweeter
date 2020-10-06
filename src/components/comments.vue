@@ -2,7 +2,8 @@
   <div id="comments">
       <commentDisplay v-for="comment in comments" :key="comment.commentId" :comment = comment />
        <div id="addComment">
-          <textarea v-model="content" placeholder="add a comment">  Add a comment </textarea> <i @click="postComment(tweetId,content)" id="toComment"  class="fas fa-2x fa-chevron-circle-right"></i>
+          <textarea :id="'commentText'+tweetId" v-model="content" placeholder="add a comment">  Add a comment </textarea> 
+          <i @click="postComment(tweetId,content)" id="toComment"  class="fas fa-2x fa-chevron-circle-right"></i>
         </div>
   </div>
 </template>
@@ -32,7 +33,7 @@ export default {
     axios.request({
       url: "https://tweeterest.ml/api/comments",
       method: "GET",
-      data: {
+      params: {
         tweetId: this.tweetId
       },
       headers: {
@@ -48,6 +49,7 @@ export default {
   },
   methods: {
     postComment(id,content) {
+      
 
       axios.request({
         url:"https://tweeterest.ml/api/comments",
@@ -56,10 +58,15 @@ export default {
           loginToken : cookies.get("token"),
           tweetId:id,
           content:content
+        },
+        headers: {
+          "Content-Type": "application/json",
+          "X-Api-Key": "ZbUbhpzNbCXwE9Cbn4nK9zYQT1aNxPuRXkYLjJB7pqa67"
         }
 
       }).then((response)=>{
         this.comments.push(response.data);
+        document.getElementById("commentText"+id).value="";
       }).catch(()=>{})
       
     }
@@ -70,12 +77,13 @@ export default {
 <style lang="scss" scoped>
 
 #comments{
+     grid-column: span 3;
     width: 100%;
-    background-color: #e0e1dd;
+    background-color: #F5F8FA;
     textarea{
        
         width: 95%;
-        background-color:#e0e1dd;
+        background-color:#F5F8FA;
         border-radius: 15px 15px 15px 15px;
        
     }

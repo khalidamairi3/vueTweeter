@@ -19,6 +19,6 @@ import homeTweets from "../components/homeTweets";
     }
 </script>
 
-<style lang="sass" scoped>
+<style lang="scss" scoped>
 
 </style>

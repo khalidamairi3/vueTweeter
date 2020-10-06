@@ -6,6 +6,7 @@ import profilePage from "../views/profile.vue";
 import HomeePage from "../views/home.vue";
 import discoverPage from "../views/discoverPage.vue";
 import userProfile from "../views/userprofile";
+import editProfile from "../views/editProfile";
 Vue.use(VueRouter);
 
 const routes = [
@@ -13,6 +14,11 @@ const routes = [
     path: "/signup",
     name: "signup-page",
     component: signupPage
+  },
+  {
+    path: "/editProfile",
+    name: "esit-profile",
+    component: editProfile
   },
   {
     path: "/userprofile",

@@ -54,7 +54,7 @@ export default {
         this.tweets = this.tweets.concat(response.data);
         this.err = false;
       })
-      .then(() => {
+      .catch(() => {
         this.err = true;
       });
   },

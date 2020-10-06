@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id>
       <h2 v-if="tweets.length ==0"> you have no tweets to display </h2>
     <tweetDisplay v-for="tweet in tweets" :key =" tweet.tweetId " :Tweet = tweet />
   </div>

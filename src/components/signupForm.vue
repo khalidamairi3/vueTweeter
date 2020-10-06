@@ -69,6 +69,7 @@ export default {
             this.$store.commit("setUser", response.data);
             this.$store.dispatch("getFollowing");
             this.$store.dispatch("getAllusers");
+            this.$router.push("/home")
             this.err = false;
           }
         })

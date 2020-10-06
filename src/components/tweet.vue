@@ -3,7 +3,7 @@
     <p class="username" @click="selectUser(tweet.userId)">
       {{ tweet.username }}
     </p>
-    <p class="date">{{ tweet.createdAt }}</p>
+    <p class="date">{{ tweet.created_at }}</p>
     <div v-if="isuser">
       <i @click="editToShow()" id="myBtn" class="far fa-edit"></i>
       <i @click="Delete(tweet.tweetId)" class="fas fa-times"></i>
@@ -21,13 +21,17 @@
 
     <p class="content">{{ tweet.content }}</p>
     <div>
-      <i id="like" @click="like_unlike(tweet.tweetId)" class="far fa-heart"></i
-      ><span id="likes"> {{likedUsers.length}}</span>
+      <i
+        @click="like_unlike(tweet.tweetId)"
+        class="fa-heart"
+        v-bind:class="{ fas: liked, far: !liked }"
+      ></i
+      ><span id="likes"> {{ likedUsers.length }}</span>
     </div>
-    <p v-if="!viewComments" @click="viewComments = true">view comments</p>
-    <p v-if="viewComments" @click="viewComments = false">hide comments</p>
+    <p class="view" v-if="!viewComments" @click="viewComments = true">view comments</p>
+    <p class="view" v-if="viewComments" @click="viewComments = false">hide comments</p>
 
-    <tweetComments v-if="viewComments" :tweetId= tweet.tweetId />
+    <tweetComments v-if="viewComments" :tweetId="tweet.tweetId" />
   </div>
 </template>
 
@@ -49,32 +53,29 @@ export default {
   },
   mounted() {
     if (this.user.userId == this.tweet.userId) this.isuser = true;
-    axios.request({
-        url:"https://tweeterest.ml/api/tweet-likes",
-        method:"GET",
-        params:{
-            tweetId:this.tweet.tweetId
+    axios
+      .request({
+        url: "https://tweeterest.ml/api/tweet-likes",
+        method: "GET",
+        params: {
+          tweetId: this.tweet.tweetId
         },
         headers: {
-            "Content-Type": "application/json",
-            "X-Api-Key": "ZbUbhpzNbCXwE9Cbn4nK9zYQT1aNxPuRXkYLjJB7pqa67"
-          }
-
-
-    }).then((response)=>{
+          "Content-Type": "application/json",
+          "X-Api-Key": "ZbUbhpzNbCXwE9Cbn4nK9zYQT1aNxPuRXkYLjJB7pqa67"
+        }
+      })
+      .then(response => {
         this.likedUsers = response.data;
-
-
-    }).catch(()=>{})
+      })
+      .catch(() => {});
 
     this.likedUsers.forEach(user => {
-        if(user.userId==this.user.userId){
-            document.getElementById("like").classList.remove("far");
-            document.getElementById("like").classList.add("fas");
-            this.liked=true
-        }
-
-        
+      if (user.userId == this.user.userId) {
+        // document.getElementById(user.username).classList.remove("far");
+        // document.getElementById(user.username).classList.add("fas");
+        this.liked = true;
+      }
     });
   },
   data() {
@@ -85,7 +86,7 @@ export default {
       content: "",
       viewComments: false,
       err: false,
-      likedUsers:[]
+      likedUsers: []
     };
   },
   computed: {
@@ -96,6 +97,7 @@ export default {
   methods: {
     selectUser(userId) {
       this.$store.commit("userToShow", userId);
+      this.$router.push("/userprofile");
     },
     editToShow() {
       document.getElementById("tweetModal").style.display = "block";
@@ -104,8 +106,7 @@ export default {
       document.getElementById("tweetModal").style.display = "none";
     },
     edit(tweetId, content) {
-      axios
-        .request({
+      axios.request({
           url: "https://tweeterest.ml/api/tweets",
           method: "PATCH",
           data: {
@@ -117,13 +118,11 @@ export default {
             "Content-Type": "application/json",
             "X-Api-Key": "ZbUbhpzNbCXwE9Cbn4nK9zYQT1aNxPuRXkYLjJB7pqa67"
           }
-        })
-        .then(response => {
-          this.tweet = response.data;
+        }).then(response => {
+          this.tweet.content = response.data.content;
           this.err = false;
           document.getElementById("tweetModal").style.display = "none";
-        })
-        .catch(() => {
+        }).catch(() => {
           this.err = true;
         });
     },
@@ -145,50 +144,47 @@ export default {
         .catch(() => {});
     },
     like_unlike(tweetId) {
-        if(!this.liked){
-            axios.request({
-                url:"https://tweeterest.ml/api/tweet-likes",
-                method:"POST",
-                data:{
-                    loginToken:cookies.get("token"),
-                    tweetId:tweetId
-                },
-                 headers: {
-            "Content-Type": "application/json",
-            "X-Api-Key": "ZbUbhpzNbCXwE9Cbn4nK9zYQT1aNxPuRXkYLjJB7pqa67"
-          }
-            }).then(()=>{
-                document.getElementById("like").classList.remove("far");
-                document.getElementById("like").classList.add("fas");
-                this.liked=true;
-                this.likedUsers.push(this.user)
-            }).catch(()=>{})
-        }
-        else{
-             axios.request({
-                url:"https://tweeterest.ml/api/tweet-likes",
-                method:"DELETE",
-                data:{
-                    loginToken:cookies.get("token"),
-                    tweetId:tweetId
-                },
-                 headers: {
-            "Content-Type": "application/json",
-            "X-Api-Key": "ZbUbhpzNbCXwE9Cbn4nK9zYQT1aNxPuRXkYLjJB7pqa67"
-          }
-            }).then(()=>{
-                document.getElementById("like").classList.remove("fas");
-                document.getElementById("like").classList.add("far");
-                let currrentUser = this.user
-                this.liked=false
-                this.likedUsers=this.likedUsers.filter(function(user){
-                    return user.userId!=currrentUser.userId;
-
-                })
-            }).catch((error)=>{
-                console.log(error);
-            })
-        }
+      if (!this.liked) {
+        axios.request({
+            url: "https://tweeterest.ml/api/tweet-likes",
+            method: "POST",
+            data: {
+              loginToken: cookies.get("token"),
+              tweetId: tweetId
+            },
+            headers: {
+              "Content-Type": "application/json",
+              "X-Api-Key": "ZbUbhpzNbCXwE9Cbn4nK9zYQT1aNxPuRXkYLjJB7pqa67"
+            }
+          }).then(() => {
+            this.liked = true;
+            this.likedUsers.push(this.user);
+          }).catch((error) => {
+            console.log(error);
+          });
+      } else {
+        axios.request({
+            url: "https://tweeterest.ml/api/tweet-likes",
+            method: "DELETE",
+            data: {
+              loginToken: cookies.get("token"),
+              tweetId: tweetId
+            },
+            headers: {
+              "Content-Type": "application/json",
+              "X-Api-Key": "ZbUbhpzNbCXwE9Cbn4nK9zYQT1aNxPuRXkYLjJB7pqa67"
+            }
+          }).then(() => {
+            let currrentUser = this.user;
+            this.liked = false;
+            this.likedUsers = this.likedUsers.filter(function(user) {
+              return user.userId != currrentUser.userId;
+            });
+          })
+          .catch(error => {
+            console.log(error);
+          });
+      }
     }
   }
 };
@@ -218,13 +214,16 @@ export default {
     font-size: 18px;
   }
 
-  #like {
+  .fa-heart {
     color: rgb(167, 16, 16);
   }
 
   .content {
     font-size: 18px;
     grid-column: span 3;
+  }
+  .view{
+    grid-column: span 2;
   }
 }
 

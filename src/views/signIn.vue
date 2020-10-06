@@ -47,6 +47,7 @@ export default {
             this.$store.dispatch("getFollowing");
             this.$store.dispatch("getAllusers");
             this.err = false;
+            this.$router.push("/home")
           }
         })
         .catch(() => {
