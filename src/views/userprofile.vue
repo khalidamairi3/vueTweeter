@@ -1,11 +1,23 @@
 <template>
   <div>
-    <h1>{{ user.username }}</h1>
-    <h1>{{ user.email }}</h1>
-    <h1>{{ user.bio }}</h1>
+     <div id="cover">
+      <img
+        src="https://besthqwallpapers.com/img/original/111844/twitter-turquoise-logo-4k-turquoise-brickwall-twitter-logo-brands.jpg"
+        alt="porfile cover photo"
+      />
+    </div>
+    <div id="initilals"><h1>{{ user.username[0]}}</h1></div>
 
-    <button @click="follow(user)" v-if="!isfollowed">follow</button>
-    <button @click="unfollow(user)" v-if="isfollowed">unfollow</button>
+    <div id="details">
+      <p id="username">{{ user.username }}</p>
+      <button class="follow" @click="follow(user)" v-if="!isfollowed">Follow</button>
+    <button class="unfollow" @click="unfollow(user)" v-if="isfollowed">Unfollow</button>
+      <p id="email">{{ user.email }}</p>
+      <p id="bio">{{ user.bio }}</p>
+    </div>
+    
+
+    
 
     <tweetDisplay v-for="tweet in tweets" :key="tweet.id" :Tweet="tweet" />
 
@@ -116,5 +128,72 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+#cover {
+    img {
+      width: 100%;
+      height: 25vh;
+      object-fit: cover;
+    }
+  }
+  #initilals {
+    position: relative;
+    bottom: 5.5vh;
+    width: 10vh;
+    height: 10vh;
+    border: 1px solid #e1e8ed;
+    text-align: center;
+    // padding-top: 10%;
+    z-index: 5;
+    background-color: #e1e8ed;
+    border-radius: 200px 200px 200px 200px;
+    margin-left: 41%;
+    h1 {
+      font-size: 24px;
+      letter-spacing: 0.5vw;
+    }
+  }
+  #details {
+    position: relative;
+    bottom: 10vh;
+    display: grid;
+    grid-template-columns: 3fr 1fr;
+    #username {
+      margin-left: 3vw;
+      font-weight: bolder;
+    }
+    #email,
+    #bio {
+      grid-column: span 2;
+      margin-left: 3vw;
+    }
+    .unfollow{
+       border: 1px solid  #1da1f2;
+      color: white;
+      background-color:  #1da1f2;
+      &:hover {
+        background-color: #e1e8ed;
+        color: #1da1f2;
+        transition: all 0.2s ease-in;
+      }
+      
+
+    }
+    button {
+      border-radius: 50px;
+      height: 5vh;
+      width: 80%;
+      font-size: 14px;
+      text-align: center;
+      font-weight: bold;
+      border: 1px solid #e1e8ed;
+      color: #657786;
+      background-color: white;
+      &:hover {
+        background-color: #1da1f2;
+        color: white;
+        transition: all 0.2s ease-in;
+      }
+    }
+    }
 </style>

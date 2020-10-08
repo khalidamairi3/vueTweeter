@@ -111,15 +111,19 @@ export default new Vuex.Store({
       return false;
     },
     notFollowing: function(state){
-      return state.allUsers.filter(function(user){
+      let users = state.allUsers.filter(function(user){
         for(let i=0;i<state.followingUsers.length;i++){
-          if(user.userId == state.followingUsers[i].userId){
+          if(user.userId == state.followingUsers[i].userId ){
             return false;
           }
         }
         return true;
 
       })
+      return users.filter(function(user){
+        return user.userId != state.user.userId ;
+      })
+
     }
     
   },
