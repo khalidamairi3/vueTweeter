@@ -43,7 +43,7 @@ export default {
       url:"https://tweeterest.ml/api/comment-likes",
       method: "GET",
       params:{
-        commentId:this.comment.commentID
+        commentId:this.comment.commentId
       },
            headers: {
             "Content-Type": "application/json",
@@ -51,16 +51,14 @@ export default {
           }
     }).then((response)=>{
       this.likedUsers=response.data;
+             let currrentUser = this.user
+        this.likedUsers.forEach(user => {
+      if (user.username== currrentUser.username) {
+        this.liked = true;
+      }
+    });
     }).catch(()=>{});
-        let currrentUser = this.user
-        let flag = 0;
-       this.likedUsers.forEach(user => {
-        if(user.userId==currrentUser.userId){
-            flag = 1
-        }})
-        if (flag == 1){
-          this.liked =true;
-        }
+      
     
   },
   data() {
@@ -140,9 +138,10 @@ export default {
             "Content-Type": "application/json",
             "X-Api-Key": "ZbUbhpzNbCXwE9Cbn4nK9zYQT1aNxPuRXkYLjJB7pqa67"
           }
-            }).then(()=>{
+            }).then((response)=>{
+              
                 this.liked=true;
-                this.likedUsers.push(this.user)
+                this.likedUsers.push(response.data)
             }).catch(()=>{})
         }
         else{
@@ -164,6 +163,7 @@ export default {
                     return user.userId!=currrentUser.userId;
 
                 })
+                console.log(this.likedUsers);
             }).catch((error)=>{
                 console.log(error);
             })

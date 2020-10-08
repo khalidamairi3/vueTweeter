@@ -14,7 +14,7 @@ export default {
   },
   computed: {
     otherUsers() {
-      return this.$store.getters.getOtherUsers;
+      return this.$store.getters.notFollowing;
     }
   },
   mounted() {

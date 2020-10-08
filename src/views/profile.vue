@@ -6,7 +6,7 @@
         alt="porfile cover photo"
       />
     </div>
-    <div id="initilals"><h1>KA</h1></div>
+    <div id="initilals"><h1>{{ user.username[0]}}</h1></div>
 
     <div id="details">
       <p id="username">{{ user.username }}</p>
@@ -169,8 +169,7 @@ export default {
   #options {
     width: 100%;
     border-top: 2px solid #e1e8ed;
-  }
-  button {
+    button {
     font-family: "Dosis", sans-serif;
     font-size: 16px;
     width: 30%;
@@ -178,6 +177,8 @@ export default {
     border: 0px;
     
   }
+  }
+  
 }
 .selection {
       color: #1da1f2;

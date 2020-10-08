@@ -102,14 +102,26 @@ export default new Vuex.Store({
       })
     },
     checkFollowing:function(state){
-      for(let i=0;i<state.followingUsers;i++){
-        if(state.followingUsers[i]==state.selectedUser)
+      for(let i=0;i<state.followingUsers.length;i++){
+        if(state.followingUsers[i].userId==state.selectedUser)
         {
           return true;
         }
       }
       return false;
+    },
+    notFollowing: function(state){
+      return state.allUsers.filter(function(user){
+        for(let i=0;i<state.followingUsers.length;i++){
+          if(user.userId == state.followingUsers[i].userId){
+            return false;
+          }
+        }
+        return true;
+
+      })
     }
+    
   },
 
   modules: {}

@@ -25,6 +25,7 @@ export default {
       })
       .then(response => {
         this.tweets = response.data;
+        // console.log(this.tweets.length);
 
         for (let i = 0; i < this.tweets.length; i++) {
          
@@ -42,13 +43,13 @@ export default {
             })
             .then(response => {
               this.tweets[i].likes = response.data.length;
-              console.log(this.tweets[i]);
-              if(i==this.tweets.length){
-                  this.tweets.sort((a,b)=>{
-                      return (a.likes < b.likes) ? 1 : -1;
-                  });
+
+              if(i==this.tweets.length-1){
+               
+                 this.sortTweets();
+                 
               }
-              console.log(this.tweets);
+              
             })
             .catch(() => {});
         }
@@ -59,7 +60,15 @@ export default {
     return {
       tweets: []
     };
-  }
+  },
+  methods: {
+      sortTweets() {
+     
+           this.tweets=this.tweets.sort((a,b)=>{
+               return b.likes - a.likes;
+          
+      })}
+  },
 };
 </script>
 

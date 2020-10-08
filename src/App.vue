@@ -14,6 +14,8 @@
     display: grid;
     justify-items: center;
     font-family: 'Dosis', sans-serif;
+    padding: 0;
+    margin: 0;
  
 }
 

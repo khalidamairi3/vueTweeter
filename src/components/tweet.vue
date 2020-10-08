@@ -67,16 +67,16 @@ export default {
       })
       .then(response => {
         this.likedUsers = response.data;
-      })
-      .catch(() => {});
-
-    this.likedUsers.forEach(user => {
-      if (user.userId == this.user.userId) {
-        // document.getElementById(user.username).classList.remove("far");
-        // document.getElementById(user.username).classList.add("fas");
+        let currrentUser = this.user
+        this.likedUsers.forEach(user => {
+      if (user.username== currrentUser.username) {
         this.liked = true;
       }
     });
+      })
+      .catch(() => {});
+
+    
   },
   data() {
     return {
