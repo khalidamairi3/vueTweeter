@@ -36,6 +36,14 @@ export default new Vuex.Store({
       state.followingUsers=state.followingUsers.filter(function(user_f){
         return user_f != user;
       })
+    },
+    reset(state){
+      state.user ={};
+      state.followingUsers=[];
+      state.followersUsers=[];
+      state.allUsers=[];
+      state.selectedUser=0;
+
     }
   },
   actions: {

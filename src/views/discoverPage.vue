@@ -14,11 +14,13 @@
         <dicoverComponent v-if="tweetsSelection"/>
         <trendingPage v-if="trendingSelection "/>
         <usersPage v-if="usersSelection" :users = otherUsers  /> 
+        <navBar />
 
     </div>
 </template>
 
 <script>
+import navBar from "../components/nav" 
 import trendingPage from "../components/trending";
 import usersPage from "../components/users"
 import dicoverComponent from "../components/discover";
@@ -27,7 +29,8 @@ import dicoverComponent from "../components/discover";
         components: {
             dicoverComponent,
             trendingPage,
-            usersPage
+            usersPage,
+            navBar
         },
         data() {
             return {
@@ -38,7 +41,7 @@ import dicoverComponent from "../components/discover";
         },
         computed: {
             otherUsers() {
-                return this.$store.getters.getOtherUsers; 
+                return this.$store.getters.notFollowing; 
             }
         },
         methods: {

@@ -26,7 +26,7 @@
     </div>
     <usersPage v-if="followersSelection"  :users= followers />
     <usersPage v-if="followingSelection"  :users= following />
-
+    <navBar />
 
     
     
@@ -34,6 +34,7 @@
 </template>
 
 <script>
+import navBar from "../components/nav" 
 import usersPage from "../components/users"
 import tweetDisplay from "../components/tweet";
 import axios from "axios";
@@ -42,7 +43,8 @@ export default {
   name: "profile-page",
   components: {
     tweetDisplay,
-    usersPage
+    usersPage,
+    navBar
   },
   mounted() {
     axios

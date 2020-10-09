@@ -22,10 +22,12 @@
     <tweetDisplay v-for="tweet in tweets" :key="tweet.id" :Tweet="tweet" />
 
     <h2 v-if="err">Somthing went Wrong while downloading the tweets</h2>
+    <navBar/>
   </div>
 </template>
 
 <script>
+import navBar from "../components/nav" 
 import axios from "axios";
 import tweetDisplay from "../components/tweet";
 import cookies from "vue-cookies";
@@ -33,7 +35,8 @@ import cookies from "vue-cookies";
 export default {
   name: "user-profile",
   components: {
-    tweetDisplay
+    tweetDisplay,
+    navBar
   },
   mounted() {
     axios.request({

@@ -174,8 +174,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import url("https://use.fontawesome.com/releases/v5.15.0/css/all.css");
-@import url("https://use.fontawesome.com/releases/v5.15.0/css/v4-shims.css");
 
 #comment{
     display: grid;

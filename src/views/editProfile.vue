@@ -2,18 +2,21 @@
   <div id="profileEdit">
        <deleteProfile />
     <editProfile />
+    <navBar />
 
   </div>
 </template>
 
 <script>
+import navBar from "../components/nav" 
 import editProfile from "../components/editProfile";
 import deleteProfile from "../components/deleteProfile";
 export default {
     name:"edit-profile",
   components: {
     editProfile,
-    deleteProfile
+    deleteProfile,
+    navBar
   }
 };
 </script>
