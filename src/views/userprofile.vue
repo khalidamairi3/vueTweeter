@@ -41,7 +41,7 @@ export default {
   async mounted() {
     if (this.myUser.userId == undefined && cookies.get("token") != undefined) {
       this.$store.dispatch("restart");
-      await delay(500);
+      await delay(800);
       
     } else if (cookies.get("token") == undefined) 
     this.$router.push("/signin");

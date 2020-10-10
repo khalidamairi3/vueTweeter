@@ -25,8 +25,6 @@ export default {
       })
       .then(response => {
         this.tweets = response.data;
-        // console.log(this.tweets.length);
-
         for (let i = 0; i < this.tweets.length; i++) {
          
           axios

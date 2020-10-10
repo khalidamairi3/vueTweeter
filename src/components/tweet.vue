@@ -1,5 +1,5 @@
 <template>
-  <div id="tweet">
+  <div class="tweet" v-bind:class="{deleted:deleted}">
     <p class="username" @click="selectUser(tweet.userId)">
       {{ tweet.username }}
     </p>
@@ -86,6 +86,7 @@ export default {
       content: "",
       viewComments: false,
       err: false,
+      deleted:false,
       likedUsers: []
     };
   },
@@ -145,7 +146,9 @@ export default {
             "X-Api-Key": "ZbUbhpzNbCXwE9Cbn4nK9zYQT1aNxPuRXkYLjJB7pqa67"
           }
         })
-        .then(() => {})
+        .then(() => {
+          this.deleted=true;
+        })
         .catch(() => {});
     },
     like_unlike(tweetId) {
@@ -198,7 +201,7 @@ export default {
 <style lang="scss" scoped>
 
 
-#tweet {
+.tweet {
   display: grid;
   align-items: center;
   grid-template-columns: 3fr 2fr 1fr;
@@ -291,5 +294,9 @@ export default {
   color: black;
   text-decoration: none;
   cursor: pointer;
+}
+.deleted{
+  display: none;
+
 }
 </style>

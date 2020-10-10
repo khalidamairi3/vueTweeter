@@ -1,6 +1,5 @@
 <template>
   <div id="createTweet">
-      
     <textarea
       placeholder="write your tweet"
       cols="30"
@@ -8,7 +7,7 @@
       v-model="content"
     ></textarea>
     <button @click="tweet(content)">Tweet</button>
-    <p v-if="err"> tweet has a limit of 200 characters</p>
+    <p v-if="err">tweet has a limit of 200 characters</p>
   </div>
 </template>
 
@@ -41,8 +40,11 @@ export default {
           "Content-Type": "application/json",
           "X-Api-Key": "ZbUbhpzNbCXwE9Cbn4nK9zYQT1aNxPuRXkYLjJB7pqa67"
         }
-      }).then(()=>{
-          this.err=false
+      }).then((response)=>{
+        this.err=false
+        this.$root.$emit('newTweet', response.data);
+
+          
           
 
       }).catch(()=>{
@@ -54,31 +56,28 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
-#createTweet{
+#createTweet {
   display: grid;
-  textarea{
-    background-color: #F5F8FA;
-
+  textarea {
+    background-color: #f5f8fa;
   }
-  button{
+  button {
     width: 25%;
     position: relative;
-    margin-top:1vh ;
+    margin-top: 1vh;
     left: 75%;
     float: right;
     color: white;
-    background-color: #1DA1F2;
-    border-radius:15px ;
-    border: 1px solid #1DA1F2;
+    background-color: #1da1f2;
+    border-radius: 15px;
+    border: 1px solid #1da1f2;
     &:hover {
-      border: 1px solid #1DA1F2;
+      border: 1px solid #1da1f2;
       background-color: white;
-      color: #1DA1F2;
+      color: #1da1f2;
       transition: all 0.2s ease-in;
       box-shadow: 2px 2px #92b4a7;
     }
   }
 }
-
 </style>

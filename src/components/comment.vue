@@ -1,5 +1,5 @@
 <template>
-  <div id="comment">
+  <div class="comment" v-bind:class="{deleted:deleted}" >
     <p class="username" @click="selectUser(comment.userId)">
       {{ comment.username }}
     </p>
@@ -67,6 +67,7 @@ export default {
       content: "",
       likedUsers:[],
       liked:false,
+      deleted:false,
       err: false
     };
   },
@@ -127,7 +128,7 @@ export default {
           }
         })
         .then(() => {
-          this.comment={};
+          this.deleted=true;
         })
         .catch(() => {});
     },
@@ -181,7 +182,7 @@ export default {
 
 <style lang="scss" scoped>
 
-#comment{
+.comment{
     display: grid;
     align-items: center;
     grid-template-columns: 3fr 2fr 1fr;
@@ -279,6 +280,9 @@ export default {
     color: black;
     text-decoration: none;
     cursor: pointer;
+  }
+  .deleted{
+    display: none;
   }
 
 </style>

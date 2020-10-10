@@ -21,12 +21,16 @@ export default {
   },
   async mounted() {
     await delay(500);
-    for (let i = 0; i < this.followingUsers.length; i++) {
+    let users = this.followingUsers;
+    
+    users=users.concat(this.user);
+
+    for (let i = 0; i < users.length; i++) {
       axios.request({
         url: "https://tweeterest.ml/api/tweets",
         method: "GET",
         params: {
-          userId: this.followingUsers[i].userId
+          userId: users[i].userId
         },
         headers: {
           "Content-Type": "application/json",
@@ -35,14 +39,26 @@ export default {
       }).then((resonse)=>{
           this.tweets=this.tweets.concat(resonse.data);
 
-      });
+      }).catch(()=>{});
     }
+    this.$root.$on("newTweet",this.addTweet);
   },
   computed: {
     followingUsers() {
       return this.$store.state.followingUsers;
+    },
+    user(){
+      return this.$store.state.user
     }
-  }
+  },
+  methods: {
+    
+    addTweet(tweet) {
+
+      this.tweets.unshift(tweet);
+      
+    }
+  },
 };
 </script>
 
