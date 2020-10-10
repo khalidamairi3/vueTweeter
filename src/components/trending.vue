@@ -46,7 +46,10 @@ export default {
 
               if(i==this.tweets.length-1){
                
-                 this.sortTweets();
+                 this.tweets.sort((a,b)=>{
+               return b.likes - a.likes;
+          
+      })
                  
               }
               
@@ -62,14 +65,6 @@ export default {
     };
   },
   
-  methods: {
-      sortTweets() {
-     
-           this.tweets=this.tweets.sort((a,b)=>{
-               return b.likes - a.likes;
-          
-      })}
-  },
 };
 </script>
 

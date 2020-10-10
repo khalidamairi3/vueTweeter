@@ -1,6 +1,7 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import axios from "axios";
+import cookies from "vue-cookies"
 
 Vue.use(Vuex);
 
@@ -100,6 +101,28 @@ export default new Vuex.Store({
       })
       
       
+    },
+    restart(){
+       axios.request({
+        url:"https://tweeterest.ml/api/users",
+        method:"GET",
+        headers: {
+          "Content-Type": "application/json",
+          "X-Api-Key": "ZbUbhpzNbCXwE9Cbn4nK9zYQT1aNxPuRXkYLjJB7pqa67"
+        },
+        params:{
+          userId:cookies.get("userId")
+        }
+
+      }).then((response)=>{
+             this.commit("setUser",response.data[0]);
+             this.dispatch("getFollowing");
+             this.dispatch("getFollowers");
+             this.dispatch("getAllusers");
+            if(cookies.get("selectedUser")!=undefined)
+             this.commit("userToShow",cookies.get("selectedUser"));
+
+      }).catch(()=>{})
     }
   },
   getters : {

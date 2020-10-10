@@ -96,7 +96,12 @@ export default {
   },
   methods: {
     selectUser(userId) {
+       if(this.user.userId==userId){
+        this.$router.push("/profile");
+        return 
+      }
       this.$store.commit("userToShow", userId);
+      cookies.set("selectedUser",userId)
       this.$router.push("/userprofile");
     },
     editToShow() {

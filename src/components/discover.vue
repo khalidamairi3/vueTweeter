@@ -7,6 +7,7 @@
 <script>
 import axios from "axios";
 import tweetDisplay from "./tweet";
+const delay = ms => new Promise(res => setTimeout(res, ms));
 export default {
   name: "discover-component",
   components: {
@@ -17,7 +18,10 @@ export default {
       return this.$store.getters.notFollowing;
     }
   },
-  mounted() {
+  async mounted() {
+   if(this.otherUsers.length == 0){
+     await delay(600);
+   }
     for (let i = 0; i < this.otherUsers.length; i++) {
       axios.request({
         url: "https://tweeterest.ml/api/tweets",

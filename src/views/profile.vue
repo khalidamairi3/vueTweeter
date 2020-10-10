@@ -6,7 +6,7 @@
         alt="porfile cover photo"
       />
     </div>
-    <div id="initilals"><h1>{{ user.username[0]}}</h1></div>
+    <div id="initilals"><h1 v-if="user.username != undefined">{{ user.username[0]}}</h1></div>
 
     <div id="details">
       <p id="username">{{ user.username }}</p>
@@ -34,10 +34,12 @@
 </template>
 
 <script>
-import navBar from "../components/nav" 
-import usersPage from "../components/users"
+import cookies from "vue-cookies";
+import navBar from "../components/nav"; 
+import usersPage from "../components/users";
 import tweetDisplay from "../components/tweet";
 import axios from "axios";
+const delay = ms => new Promise(res => setTimeout(res, ms));
 
 export default {
   name: "profile-page",
@@ -46,7 +48,15 @@ export default {
     usersPage,
     navBar
   },
-  mounted() {
+ async mounted() {
+    if (this.user.userId == undefined && cookies.get("token") != undefined) {
+       this.$store.dispatch("restart");
+        await delay(500);
+      //    this.$router.push("/home");
+    } else if (cookies.get("token") == undefined) {
+      this.$router.push("/signin");
+    }
+   
     axios
       .request({
         url: "https://tweeterest.ml/api/tweets",

@@ -32,6 +32,7 @@ export default {
               cookies.remove("userId");
               cookies.remove("userSelection");
               this.$store.commit("reset");
+              this.$router.push("/signin")
           }).catch(()=>{});
           
       }

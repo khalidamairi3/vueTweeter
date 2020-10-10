@@ -20,6 +20,7 @@
 </template>
 
 <script>
+import cookies from "vue-cookies"
 import navBar from "../components/nav" 
 import trendingPage from "../components/trending";
 import usersPage from "../components/users"
@@ -32,6 +33,15 @@ import dicoverComponent from "../components/discover";
             usersPage,
             navBar
         },
+        mounted () {
+             if (this.user.userId == undefined && cookies.get("token") != undefined) {
+      this.$store.dispatch("restart");
+
+      //    this.$router.push("/home");
+    } else if (cookies.get("token") == undefined) {
+      this.$router.push("/signin");
+    };
+        },
         data() {
             return {
                 tweetsSelection: true,
@@ -42,6 +52,9 @@ import dicoverComponent from "../components/discover";
         computed: {
             otherUsers() {
                 return this.$store.getters.notFollowing; 
+            },
+            user(){
+                return this.$store.state.user;
             }
         },
         methods: {

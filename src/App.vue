@@ -12,7 +12,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Dosis:wght@500&display=swap');
 @import url("https://use.fontawesome.com/releases/v5.15.0/css/all.css");
 @import url("https://use.fontawesome.com/releases/v5.15.0/css/v4-shims.css");
-
+body{
+  margin : 0
+}
 #app {
     width: 100%;
     height: 100vh;

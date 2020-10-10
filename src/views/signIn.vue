@@ -9,6 +9,7 @@
         <label for="password"> Password</label>
         <input name="password" type="password" v-model="password" />
         <button @click="login">Login</button>
+        <p v-if="err"> the username or the password is incorrect</p>
   </div>
 </template>
 
@@ -17,12 +18,27 @@ import axios from "axios";
 import cookies from "vue-cookies";
 export default {
   name: "signin-page",
+  mounted () {
+    if(this.user.userId==undefined && cookies.get("token")!=undefined){
+      this.$store.dispatch("restart");
+       this.$router.push("/home");
+    }
+    if (cookies.get("token")!=undefined)
+    {
+      this.$router.push("/home");
+    }
+  },
   data() {
     return {
       email: "",
       password: "",
       err: false
     };
+  },
+  computed: {
+    user() {
+      return this.$store.state.user 
+    }
   },
   methods: {
     login() {
@@ -43,8 +59,9 @@ export default {
           console.log(response);
           if (response.data.loginToken != undefined) {
             cookies.set("token", response.data.loginToken);
+            cookies.set("userId",response.data.userId);
             this.$store.commit("setUser", response.data);
-             this.$store.dispatch("getFollowing");
+            this.$store.dispatch("getFollowing");
             this.$store.dispatch("getFollowers");
             this.$store.dispatch("getAllusers");
             this.err = false;
