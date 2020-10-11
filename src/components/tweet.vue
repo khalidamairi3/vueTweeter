@@ -1,5 +1,5 @@
 <template>
-  <div class="tweet" v-bind:class="{deleted:deleted}">
+  <div class="tweet" v-bind:class="{ deleted: deleted }">
     <p class="username" @click="selectUser(tweet.userId)">
       {{ tweet.username }}
     </p>
@@ -28,8 +28,12 @@
       ></i
       ><span id="likes"> {{ likedUsers.length }}</span>
     </div>
-    <p class="view" v-if="!viewComments" @click="viewComments = true">view comments</p>
-    <p class="view" v-if="viewComments" @click="viewComments = false">hide comments</p>
+    <p class="view" v-if="!viewComments" @click="viewComments = true">
+      view comments
+    </p>
+    <p class="view" v-if="viewComments" @click="viewComments = false">
+      hide comments
+    </p>
 
     <tweetComments v-if="viewComments" :tweetId="tweet.tweetId" />
   </div>
@@ -53,30 +57,7 @@ export default {
   },
   mounted() {
     if (this.user.userId == this.tweet.userId) this.isuser = true;
-    axios
-      .request({
-        url: "https://tweeterest.ml/api/tweet-likes",
-        method: "GET",
-        params: {
-          tweetId: this.tweet.tweetId
-        },
-        headers: {
-          "Content-Type": "application/json",
-          "X-Api-Key": "ZbUbhpzNbCXwE9Cbn4nK9zYQT1aNxPuRXkYLjJB7pqa67"
-        }
-      })
-      .then(response => {
-        this.likedUsers = response.data;
-        let currrentUser = this.user
-        this.likedUsers.forEach(user => {
-      if (user.username== currrentUser.username) {
-        this.liked = true;
-      }
-    });
-      })
-      .catch(() => {});
-
-    
+    this.checkLiked();
   },
   data() {
     return {
@@ -86,7 +67,10 @@ export default {
       content: "",
       viewComments: false,
       err: false,
-      deleted:false,
+      deleted: false,
+      editDisable: false,
+      deleteDisable: false,
+      likeDisable: false,
       likedUsers: []
     };
   },
@@ -96,13 +80,39 @@ export default {
     }
   },
   methods: {
+    checkLiked() {
+      axios
+        .request({
+          url: "https://tweeterest.ml/api/tweet-likes",
+          method: "GET",
+          params: {
+            tweetId: this.tweet.tweetId
+          },
+          headers: {
+            "Content-Type": "application/json",
+            "X-Api-Key": "ZbUbhpzNbCXwE9Cbn4nK9zYQT1aNxPuRXkYLjJB7pqa67"
+          }
+        })
+        .then(response => {
+          this.likedUsers = response.data;
+          let currrentUser = this.user;
+          this.likedUsers.forEach(user => {
+            if (user.username == currrentUser.username) {
+              this.liked = true;
+            }
+          });
+        })
+        .catch(() => {
+          alert("Something went wrong in loading likes ");
+        });
+    },
     selectUser(userId) {
-       if(this.user.userId==userId){
+      if (this.user.userId == userId) {
         this.$router.push("/profile");
-        return 
+        return;
       }
       this.$store.commit("userToShow", userId);
-      cookies.set("selectedUser",userId)
+      cookies.set("selectedUser", userId);
       this.$router.push("/userprofile");
     },
     editToShow() {
@@ -112,7 +122,12 @@ export default {
       document.getElementById("tweetModal").style.display = "none";
     },
     edit(tweetId, content) {
-      axios.request({
+      if (this.editDisable) {
+        return;
+      }
+      this.editDisable = true;
+      axios
+        .request({
           url: "https://tweeterest.ml/api/tweets",
           method: "PATCH",
           data: {
@@ -124,15 +139,23 @@ export default {
             "Content-Type": "application/json",
             "X-Api-Key": "ZbUbhpzNbCXwE9Cbn4nK9zYQT1aNxPuRXkYLjJB7pqa67"
           }
-        }).then(response => {
+        })
+        .then(response => {
           this.tweet.content = response.data.content;
+          this.editDisable = false;
           this.err = false;
           document.getElementById("tweetModal").style.display = "none";
-        }).catch(() => {
+        })
+        .catch(() => {
+          this.editDisable = false;
           this.err = true;
         });
     },
     Delete(tweetId) {
+      if (this.deleteDisable) {
+        return;
+      }
+      this.deleteDisable = true;
       axios
         .request({
           url: "https://tweeterest.ml/api/tweets",
@@ -147,13 +170,22 @@ export default {
           }
         })
         .then(() => {
-          this.deleted=true;
+          this.deleteDisable = false;
+          this.deleted = true;
         })
-        .catch(() => {});
+        .catch(() => {
+          this.deleteDisable = false;
+          alert("Something went wrong with deleting tweet");
+        });
     },
     like_unlike(tweetId) {
+      if (this.likeDisable) {
+        return;
+      }
+      this.likeDisable = true;
       if (!this.liked) {
-        axios.request({
+        axios
+          .request({
             url: "https://tweeterest.ml/api/tweet-likes",
             method: "POST",
             data: {
@@ -164,14 +196,19 @@ export default {
               "Content-Type": "application/json",
               "X-Api-Key": "ZbUbhpzNbCXwE9Cbn4nK9zYQT1aNxPuRXkYLjJB7pqa67"
             }
-          }).then(() => {
+          })
+          .then(() => {
+            this.likeDisable = false;
             this.liked = true;
             this.likedUsers.push(this.user);
-          }).catch((error) => {
-            console.log(error);
+          })
+          .catch(() => {
+            this.likeDisable = false;
+            alert("Something went wrong");
           });
       } else {
-        axios.request({
+        axios
+          .request({
             url: "https://tweeterest.ml/api/tweet-likes",
             method: "DELETE",
             data: {
@@ -182,15 +219,18 @@ export default {
               "Content-Type": "application/json",
               "X-Api-Key": "ZbUbhpzNbCXwE9Cbn4nK9zYQT1aNxPuRXkYLjJB7pqa67"
             }
-          }).then(() => {
+          })
+          .then(() => {
+            this.likeDisable = false;
             let currrentUser = this.user;
             this.liked = false;
             this.likedUsers = this.likedUsers.filter(function(user) {
               return user.userId != currrentUser.userId;
             });
           })
-          .catch(error => {
-            console.log(error);
+          .catch(() => {
+            this.likeDisable = false;
+            alert("Something went wrong");
           });
       }
     }
@@ -199,8 +239,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
-
 .tweet {
   display: grid;
   align-items: center;
@@ -229,7 +267,7 @@ export default {
     font-size: 18px;
     grid-column: span 3;
   }
-  .view{
+  .view {
     grid-column: span 2;
   }
 }
@@ -295,8 +333,7 @@ export default {
   text-decoration: none;
   cursor: pointer;
 }
-.deleted{
+.deleted {
   display: none;
-
 }
 </style>

@@ -47,7 +47,9 @@ const routes = [
     name: "home-page",
     component: HomeePage
   },
- 
+  { path: '/login', redirect: '/signin' },
+  { path: '/*', redirect: '/home' }
+
 ];
 
 const router = new VueRouter({

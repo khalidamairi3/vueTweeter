@@ -21,9 +21,8 @@ export default {
   mounted() {
     if (this.user.userId == undefined && cookies.get("token") != undefined) {
       this.$store.dispatch("restart");
-
-      
-    } else if (cookies.get("token") == undefined) this.$router.push("/signin");
+    } else if (cookies.get("token") == undefined) 
+    this.$router.push("/signin");
   }
 };
 </script>

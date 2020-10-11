@@ -1,7 +1,7 @@
 <template>
   <div id>
-      <h2 v-if="tweets.length ==0"> you have no tweets to display </h2>
-    <tweetDisplay v-for="tweet in tweets" :key =" tweet.tweetId " :Tweet = tweet />
+    <h2 v-if="tweets.length == 0">you have no tweets to display</h2>
+    <tweetDisplay v-for="tweet in tweets" :key="tweet.tweetId" :Tweet="tweet" />
   </div>
 </template>
 
@@ -21,44 +21,48 @@ export default {
   },
   async mounted() {
     await delay(500);
-    let users = this.followingUsers;
-    
-    users=users.concat(this.user);
-
-    for (let i = 0; i < users.length; i++) {
-      axios.request({
-        url: "https://tweeterest.ml/api/tweets",
-        method: "GET",
-        params: {
-          userId: users[i].userId
-        },
-        headers: {
-          "Content-Type": "application/json",
-          "X-Api-Key": "ZbUbhpzNbCXwE9Cbn4nK9zYQT1aNxPuRXkYLjJB7pqa67"
-        }
-      }).then((resonse)=>{
-          this.tweets=this.tweets.concat(resonse.data);
-
-      }).catch(()=>{});
-    }
-    this.$root.$on("newTweet",this.addTweet);
+    this.getFollowingTweets();
+    this.$root.$on("newTweet", this.addTweet);
   },
   computed: {
     followingUsers() {
       return this.$store.state.followingUsers;
     },
-    user(){
-      return this.$store.state.user
+    user() {
+      return this.$store.state.user;
     }
   },
   methods: {
-    
     addTweet(tweet) {
-
       this.tweets.unshift(tweet);
-      
+    },
+    getFollowingTweets() {
+      let users = this.followingUsers;
+
+      users = users.concat(this.user);
+
+      for (let i = 0; i < users.length; i++) {
+        axios
+          .request({
+            url: "https://tweeterest.ml/api/tweets",
+            method: "GET",
+            params: {
+              userId: users[i].userId
+            },
+            headers: {
+              "Content-Type": "application/json",
+              "X-Api-Key": "ZbUbhpzNbCXwE9Cbn4nK9zYQT1aNxPuRXkYLjJB7pqa67"
+            }
+          })
+          .then(resonse => {
+            this.tweets = this.tweets.concat(resonse.data);
+          })
+          .catch(() => {
+            alert("Somthing went Wrong");
+          });
+      }
     }
-  },
+  }
 };
 </script>
 

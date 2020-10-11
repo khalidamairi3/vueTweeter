@@ -18,17 +18,14 @@ export default {
     createTweet,
     navBar
   },
- mounted() {
+  mounted() {
     if (this.user.userId == undefined && cookies.get("token") != undefined) {
-       this.$store.dispatch("restart");
-      this.tweetsReady=true
-
+      this.$store.dispatch("restart");
+      this.tweetsReady = true;
     } else if (cookies.get("token") == undefined) {
       this.$router.push("/signin");
-    }
-    else{
-        this.tweetsReady=true;
-
+    } else {
+      this.tweetsReady = true;
     }
   },
   computed: {
@@ -37,11 +34,10 @@ export default {
     }
   },
   data() {
-      return {
-        tweetsReady: false
-      }
-  },
-  
+    return {
+      tweetsReady: false
+    };
+  }
 };
 </script>
 

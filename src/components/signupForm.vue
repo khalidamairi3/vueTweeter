@@ -1,31 +1,34 @@
 <template>
   <div id="signup">
-        <h1>Sign Up Page</h1>
-        <label for="Email"> Email</label>
-        <input type="text" name="Email" v-model="email" />
-        <br />
-        <label for="Password"> Password</label>
-        <input type="password" name="Password" v-model="password" />
-        <br />
-        <label for="username"></label>
-        <label for="username"> username </label>
-        <input type="text" name="username" v-model="username" />
-        <br />
-        <label for="birthdate"> birthdate</label>
-        
-        <input type="text" name="birthdate" placeholder="yyyy-mm-dd" v-model="birthdate" />
-        <br />
-        <label for="bio"> bio</label>
-        <textarea type="text" name="bio" v-model="bio" > </textarea>
-        <br />
-        <button @click="signUp" type="submit">sign up</button>
-        <p v-if="err">
-          the information you entered is not valid, please check the information you
-          just entered
-        </p>
+    <h1>Sign Up Page</h1>
+    <label for="Email"> Email</label>
+    <input type="text" name="Email" v-model="email" />
+    <br />
+    <label for="Password"> Password</label>
+    <input type="password" name="Password" v-model="password" />
+    <br />
+    <label for="username"></label>
+    <label for="username"> username </label>
+    <input type="text" name="username" v-model="username" />
+    <br />
+    <label for="birthdate"> birthdate</label>
 
-
-    </div>
+    <input
+      type="text"
+      name="birthdate"
+      placeholder="yyyy-mm-dd"
+      v-model="birthdate"
+    />
+    <br />
+    <label for="bio"> bio</label>
+    <textarea type="text" name="bio" v-model="bio"> </textarea>
+    <br />
+    <button @click="signUp" type="submit" :disabled="disable">sign up</button>
+    <p v-if="err">
+      the information you entered is not valid, please check the information you
+      just entered
+    </p>
+  </div>
 </template>
 
 <script>
@@ -41,11 +44,13 @@ export default {
       username: "",
       bio: "",
       birthdate: "",
-      err: false
+      err: false,
+      disable: false
     };
   },
   methods: {
     signUp() {
+      this.disable = true;
       axios
         .request({
           url: "https://tweeterest.ml/api/users",
@@ -68,12 +73,14 @@ export default {
             cookies.set("token", response.data.loginToken);
             this.$store.commit("setUser", response.data);
             this.$store.dispatch("getAllusers");
-            this.$router.push("/home")
+            this.$router.push("/home");
             this.err = false;
+            this.disable = false;
           }
         })
         .catch(() => {
           this.err = true;
+          this.disable = false;
         });
     }
   }
@@ -81,57 +88,50 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-#signup{
-    text-transform: capitalize;
-    letter-spacing: 0.8vw;
-    min-height: 80%;
+#signup {
+  text-transform: capitalize;
+  letter-spacing: 0.8vw;
+  min-height: 80%;
+  width: 90%;
+  display: grid;
+  justify-items: center;
+  align-items: center;
+  border-radius: 15px 15px 15px 15px;
+  border: 1px solid #92b4a7;
+
+  input {
     width: 90%;
-    display: grid;
-    justify-items: center;
-    align-items: center;
+    height: 6vh;
+    border-radius: 10px 10px 10px 10px;
+    font-family: "Courier New", Courier, monospace;
+  }
+  textarea {
+    width: 90%;
+    height: 12vh;
+    border-radius: 10px 10px 10px 10px;
+  }
+  p {
+    color: #3e000c;
+  }
+  button {
+    margin-top: 2vh;
+    width: 40%;
+    height: 6vh;
+    background-color: #00cecb;
+    color: white;
     border-radius: 15px 15px 15px 15px;
-    border: 1px solid #92B4A7;
-    
+    border: 1px solid #00cecb;
+    text-transform: capitalize;
+    letter-spacing: 0.4vw;
+    margin-bottom: 2vh;
 
-    input{
-        
-        width: 90%;
-        height: 6vh;
-        border-radius: 10px 10px 10px 10px;
-        font-family: 'Courier New', Courier, monospace;
+    &:hover {
+      border: 1px solid #00cecb;
+      background-color: white;
+      color: #00cecb;
+      transition: all 0.2s ease-in;
+      box-shadow: 2px 2px #92b4a7;
     }
-    textarea{
-        width: 90%;
-        height: 12vh;
-        border-radius: 10px 10px 10px 10px;
-    }
-    p{
-      color: #3E000C;
-    }
-    button{
-        margin-top: 2vh;
-        width: 40%;
-        height: 6vh;
-        background-color: #00CECB;
-        color: white;
-        border-radius: 15px 15px 15px 15px;
-        border: 1px solid  #00CECB ;
-        text-transform: capitalize;
-        letter-spacing: 0.4vw;
-        margin-bottom: 2vh;
-        
-        
-
-        &:hover{
-            border: 1px solid  #00CECB ;
-            background-color:white;
-            color: #00CECB;
-            transition: all 0.2s ease-in;
-            box-shadow: 2px 2px #92B4A7;
-            
-
-        }
-    }
-
+  }
 }
 </style>

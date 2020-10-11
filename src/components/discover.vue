@@ -1,6 +1,11 @@
 <template>
   <div>
-    <tweetDisplay v-for="tweet in randomtweets" :key="tweet.tweetId" :Tweet = tweet />
+    <p v-if="randomtweets.length == 0">There is no tweets to show</p>
+    <tweetDisplay
+      v-for="tweet in randomtweets"
+      :key="tweet.tweetId"
+      :Tweet="tweet"
+    />
   </div>
 </template>
 
@@ -11,7 +16,7 @@ const delay = ms => new Promise(res => setTimeout(res, ms));
 export default {
   name: "discover-component",
   components: {
-      tweetDisplay,
+    tweetDisplay
   },
   computed: {
     otherUsers() {
@@ -19,30 +24,39 @@ export default {
     }
   },
   async mounted() {
-   if(this.otherUsers.length == 0){
-     await delay(600);
-   }
-    for (let i = 0; i < this.otherUsers.length; i++) {
-      axios.request({
-        url: "https://tweeterest.ml/api/tweets",
-        method: "GET",
-        params: {
-          userId: this.otherUsers[i].userId
-        },
-        headers: {
-          "Content-Type": "application/json",
-          "X-Api-Key": "ZbUbhpzNbCXwE9Cbn4nK9zYQT1aNxPuRXkYLjJB7pqa67"
-        }
-      }).then((response)=>{
-          if(response.data.length>0)
-          this.randomtweets.push(response.data[Math.floor(Math.random()*response.data.length)]);
-      }).catch(()=>{});
+    if (this.otherUsers.length == 0) {
+      await delay(600);
     }
-  
+    this.getRandomTweets();
+  },
+  methods: {
+    getRandomTweets() {
+      for (let i = 0; i < this.otherUsers.length; i++) {
+        axios
+          .request({
+            url: "https://tweeterest.ml/api/tweets",
+            method: "GET",
+            params: {
+              userId: this.otherUsers[i].userId
+            },
+            headers: {
+              "Content-Type": "application/json",
+              "X-Api-Key": "ZbUbhpzNbCXwE9Cbn4nK9zYQT1aNxPuRXkYLjJB7pqa67"
+            }
+          })
+          .then(response => {
+            if (response.data.length > 0)
+              this.randomtweets.push(
+                response.data[Math.floor(Math.random() * response.data.length)]
+              );
+          })
+          .catch(() => {});
+      }
+    }
   },
   data() {
     return {
-      randomtweets: [],
+      randomtweets: []
     };
   }
 };

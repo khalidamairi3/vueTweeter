@@ -6,7 +6,7 @@
       rows="5"
       v-model="content"
     ></textarea>
-    <button @click="tweet(content)">Tweet</button>
+    <button :disabled="disable" @click="tweet(content)">Tweet</button>
     <p v-if="err">tweet has a limit of 200 characters</p>
   </div>
 </template>
@@ -19,7 +19,8 @@ export default {
   data() {
     return {
       content: "",
-      err: false
+      err: false,
+      disable: false
     };
   },
   computed: {
@@ -29,27 +30,29 @@ export default {
   },
   methods: {
     tweet(content) {
-      axios.request({
-        url: "https://tweeterest.ml/api/tweets",
-        method: "POST",
-        data: {
-          loginToken: cookies.get("token"),
-          content: content
-        },
-        headers: {
-          "Content-Type": "application/json",
-          "X-Api-Key": "ZbUbhpzNbCXwE9Cbn4nK9zYQT1aNxPuRXkYLjJB7pqa67"
-        }
-      }).then((response)=>{
-        this.err=false
-        this.$root.$emit('newTweet', response.data);
-
-          
-          
-
-      }).catch(()=>{
+      this.disable = true;
+      axios
+        .request({
+          url: "https://tweeterest.ml/api/tweets",
+          method: "POST",
+          data: {
+            loginToken: cookies.get("token"),
+            content: content
+          },
+          headers: {
+            "Content-Type": "application/json",
+            "X-Api-Key": "ZbUbhpzNbCXwE9Cbn4nK9zYQT1aNxPuRXkYLjJB7pqa67"
+          }
+        })
+        .then(response => {
+          this.disable = false;
+          this.err = false;
+          this.$root.$emit("newTweet", response.data);
+        })
+        .catch(() => {
+          this.disable = false;
           this.err = true;
-      });
+        });
     }
   }
 };

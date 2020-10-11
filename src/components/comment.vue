@@ -14,7 +14,7 @@
         <span @click="closeModal()" class="close">&times;</span>
         <p>Edit your comment</p>
         <textarea rows="5" v-model="content"></textarea>
-        <button @click="updateComment(comment.commentId, content)">Edit</button>
+        <button :disabled="editDisable" @click="updateComment(comment.commentId, content)">Edit</button>
         <h3 v-if="err">the comment has a limit of 200 characters</h3>
       </div>
     </div>
@@ -39,7 +39,32 @@ export default {
     }
   },
   mounted () {
-    axios.request({
+    this.checkliked();
+    
+      
+    
+  },
+  data() {
+    return {
+      
+      content: "",
+      likedUsers:[],
+      liked:false,
+      deleted:false,
+      deleteDisable:false,
+      editDisable:false,
+      likeDisable:false,
+      err: false
+    };
+  },
+  computed: {
+    user() {
+      return this.$store.state.user;
+    }
+  },
+  methods: {
+    checkliked(){
+      axios.request({
       url:"https://tweeterest.ml/api/comment-likes",
       method: "GET",
       params:{
@@ -57,26 +82,10 @@ export default {
         this.liked = true;
       }
     });
-    }).catch(()=>{});
-      
-    
-  },
-  data() {
-    return {
-      
-      content: "",
-      likedUsers:[],
-      liked:false,
-      deleted:false,
-      err: false
-    };
-  },
-  computed: {
-    user() {
-      return this.$store.state.user;
-    }
-  },
-  methods: {
+    }).catch(()=>{
+      alert("Something went Wrong");
+    });
+    },
     selectUser(userId) {
       if(this.user.userId==userId){
         this.$router.push("/profile");
@@ -94,6 +103,7 @@ export default {
     },
     
     updateComment(id, content) {
+      this.editDisable=true;
       axios.request({
           url: "https://tweeterest.ml/api/comments",
           method: "PATCH",
@@ -109,12 +119,18 @@ export default {
         }).then((response) => {
           this.closeModal();
           this.comment.content = response.data.content;
+          this.editDisable=false;
           this.err = false;
         }).catch(() => {
+          this.editDisable=false;
           this.err = true;
         });
     },
     Delete(id) {
+      if(this.deleteDisable){
+        return
+      }
+      this.deleteDisable=true
       axios.request({
           url: "https://tweeterest.ml/api/comments",
           method: "DELETE",
@@ -128,11 +144,19 @@ export default {
           }
         })
         .then(() => {
+          this.deleteDisable=false;
           this.deleted=true;
         })
-        .catch(() => {});
+        .catch(() => {
+          this.deleteDisable=false;
+          alert("this comment couldn,t be deleted");
+        });
     },
     like_unlike(commentId) {
+      if(this.likeDisable){
+        return 
+      }
+      this.likeDisable=true;
         if(!this.liked){
             axios.request({
                 url:"https://tweeterest.ml/api/comment-likes",
@@ -146,10 +170,13 @@ export default {
             "X-Api-Key": "ZbUbhpzNbCXwE9Cbn4nK9zYQT1aNxPuRXkYLjJB7pqa67"
           }
             }).then((response)=>{
-              
+                this.likeDisable=false;
                 this.liked=true;
                 this.likedUsers.push(response.data)
-            }).catch(()=>{})
+            }).catch(()=>{
+              this.likeDisable=false;
+              alert("Somthing Went Wrong");
+            })
         }
         else{
              axios.request({
@@ -164,15 +191,17 @@ export default {
             "X-Api-Key": "ZbUbhpzNbCXwE9Cbn4nK9zYQT1aNxPuRXkYLjJB7pqa67"
           }
             }).then(()=>{
+                this.likeDisable=false;
                 let currrentUser = this.user
                 this.liked=false
                 this.likedUsers=this.likedUsers.filter(function(user){
                     return user.userId!=currrentUser.userId;
 
                 })
-                console.log(this.likedUsers);
-            }).catch((error)=>{
-                console.log(error);
+               
+            }).catch(()=>{
+                this.likeDisable=false;
+                alert("Somthing went wrong ")
             })
         }
     }

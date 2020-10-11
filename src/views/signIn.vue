@@ -1,15 +1,13 @@
 <template >
   <div id="login">
-    
-    
-     <h1>LogIn</h1>
-        <label for="email"> Email </label>
-        <input type="text" v-model="email" name="email"  />
-        <br />
-        <label for="password"> Password</label>
-        <input name="password" type="password" v-model="password" />
-        <button @click="login">Login</button>
-        <p v-if="err"> the username or the password is incorrect</p>
+    <h1>LogIn</h1>
+    <label for="email"> Email </label>
+    <input type="text" v-model="email" name="email" />
+    <br />
+    <label for="password"> Password</label>
+    <input name="password" type="password" v-model="password" />
+    <button :disabled="disable" tyoe="submit" @click="login">Login</button>
+    <p v-if="err">the username or the password is incorrect</p>
   </div>
 </template>
 
@@ -18,13 +16,12 @@ import axios from "axios";
 import cookies from "vue-cookies";
 export default {
   name: "signin-page",
-  mounted () {
-    if(this.user.userId==undefined && cookies.get("token")!=undefined){
+  mounted() {
+    if (this.user.userId == undefined && cookies.get("token") != undefined) {
       this.$store.dispatch("restart");
-       this.$router.push("/home");
+      this.$router.push("/home");
     }
-    if (cookies.get("token")!=undefined)
-    {
+    if (cookies.get("token") != undefined) {
       this.$router.push("/home");
     }
   },
@@ -32,12 +29,13 @@ export default {
     return {
       email: "",
       password: "",
-      err: false
+      err: false,
+      disable: false
     };
   },
   computed: {
     user() {
-      return this.$store.state.user 
+      return this.$store.state.user;
     }
   },
   methods: {
@@ -56,20 +54,21 @@ export default {
           }
         })
         .then(response => {
-          console.log(response);
           if (response.data.loginToken != undefined) {
             cookies.set("token", response.data.loginToken);
-            cookies.set("userId",response.data.userId);
+            cookies.set("userId", response.data.userId);
             this.$store.commit("setUser", response.data);
             this.$store.dispatch("getFollowing");
             this.$store.dispatch("getFollowers");
             this.$store.dispatch("getAllusers");
             this.err = false;
-            this.$router.push("/home")
+            this.disable = false;
+            this.$router.push("/home");
           }
         })
         .catch(() => {
           this.err = true;
+          this.disable = false;
         });
     }
   }
@@ -77,48 +76,39 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
-
 #login {
-    text-transform: capitalize;
-    letter-spacing: 0.4vw;
-    height: 50%;
+  text-transform: capitalize;
+  letter-spacing: 0.4vw;
+  height: 50%;
+  width: 90%;
+  display: grid;
+  justify-items: center;
+  align-items: center;
+  border-radius: 15px 15px 15px 15px;
+  border: 1px solid #92b4a7;
+
+  input {
     width: 90%;
-    display: grid;
-    justify-items: center;
-    align-items: center;
+    height: 6vh;
+    border-radius: 10px 10px 10px 10px;
+    font-family: "Courier New", Courier, monospace;
+  }
+  button {
+    margin-top: 2vh;
+    width: 40%;
+    height: 6vh;
+    background-color: #00cecb;
+    color: white;
     border-radius: 15px 15px 15px 15px;
-    border: 1px solid #92B4A7;
-    
+    border: 1px solid #00cecb;
 
-    input{
-        
-        width: 90%;
-        height: 6vh;
-        border-radius: 10px 10px 10px 10px;
-        font-family: 'Courier New', Courier, monospace;
+    &:hover {
+      border: 1px solid #00cecb;
+      background-color: white;
+      color: #00cecb;
+      transition: all 0.2s ease-in;
+      box-shadow: 2px 2px #92b4a7;
     }
-    button{
-        margin-top: 2vh;
-        width: 40%;
-        height: 6vh;
-        background-color: #00CECB;
-        color: white;
-        border-radius: 15px 15px 15px 15px;
-        border: 1px solid  #00CECB ;
-        
-
-        &:hover{
-            border: 1px solid  #00CECB ;
-            background-color:white;
-            color: #00CECB;
-            transition: all 0.2s ease-in;
-            box-shadow: 2px 2px #92B4A7;
-            
-
-        }
-    }
-
+  }
 }
-
 </style>

@@ -6,7 +6,9 @@
         alt="porfile cover photo"
       />
     </div>
-    <div id="initilals"><h1 v-if="user.username != undefined">{{ user.username[0]}}</h1></div>
+    <div id="initilals">
+      <h1 v-if="user.username != undefined">{{ user.username[0] }}</h1>
+    </div>
 
     <div id="details">
       <p id="username">{{ user.username }}</p>
@@ -15,27 +17,40 @@
       <p id="bio">{{ user.bio }}</p>
     </div>
     <div id="options">
-      <button @click="selectTweet"  v-bind:class=" { selection: tweetsSelection } ">Tweets</button>
-      <button @click="selectFolowers" v-bind:class=" { selection: followersSelection } ">Followers</button>
-      <button @click="selectFolowing" v-bind:class=" { selection: followingSelection } ">Follwing</button> 
+      <button
+        @click="selectTweet"
+        v-bind:class="{ selection: tweetsSelection }"
+      >
+        Tweets
+      </button>
+      <button
+        @click="selectFolowers"
+        v-bind:class="{ selection: followersSelection }"
+      >
+        Followers
+      </button>
+      <button
+        @click="selectFolowing"
+        v-bind:class="{ selection: followingSelection }"
+      >
+        Follwing
+      </button>
     </div>
 
     <div v-if="tweetsSelection">
-      <tweetDisplay  v-for="tweet in tweets" :key="tweet.id" :Tweet="tweet" />
+      <p v-if="tweets.length==0"> Thee is no tweets to show</p>
+      <tweetDisplay v-for="tweet in tweets" :key="tweet.id" :Tweet="tweet" />
       <h2 v-if="err">Something Went Wrong</h2>
     </div>
-    <usersPage v-if="followersSelection"  :users= followers />
-    <usersPage v-if="followingSelection"  :users= following />
+    <usersPage v-if="followersSelection" :users="followers" />
+    <usersPage v-if="followingSelection" :users="following" />
     <navBar />
-
-    
-    
   </div>
 </template>
 
 <script>
 import cookies from "vue-cookies";
-import navBar from "../components/nav"; 
+import navBar from "../components/nav";
 import usersPage from "../components/users";
 import tweetDisplay from "../components/tweet";
 import axios from "axios";
@@ -48,41 +63,21 @@ export default {
     usersPage,
     navBar
   },
- async mounted() {
+  async mounted() {
     if (this.user.userId == undefined && cookies.get("token") != undefined) {
-       this.$store.dispatch("restart");
-        await delay(500);
-      //    this.$router.push("/home");
+      this.$store.dispatch("restart");
+      await delay(500);
     } else if (cookies.get("token") == undefined) {
       this.$router.push("/signin");
     }
-   
-    axios
-      .request({
-        url: "https://tweeterest.ml/api/tweets",
-        method: "GET",
-        params: {
-          userId: this.user.userId
-        },
-        headers: {
-          "Content-Type": "application/json",
-          "X-Api-Key": "ZbUbhpzNbCXwE9Cbn4nK9zYQT1aNxPuRXkYLjJB7pqa67"
-        }
-      })
-      .then(resonse => {
-        this.tweets = resonse.data;
-        this.err = false;
-      })
-      .catch(() => {
-        this.err = true;
-      });
+    this.getTweets();
   },
   data() {
     return {
       tweets: [],
-      tweetsSelection : true,
-      followersSelection : false,
-      followingSelection : false,
+      tweetsSelection: true,
+      followersSelection: false,
+      followingSelection: false,
       err: false
     };
   },
@@ -90,33 +85,53 @@ export default {
     user() {
       return this.$store.state.user;
     },
-    following(){
+    following() {
       return this.$store.state.followingUsers;
     },
-     followers(){
+    followers() {
       return this.$store.state.followersUsers;
     }
   },
   methods: {
+    getTweets() {
+      axios
+        .request({
+          url: "https://tweeterest.ml/api/tweets",
+          method: "GET",
+          params: {
+            userId: this.user.userId
+          },
+          headers: {
+            "Content-Type": "application/json",
+            "X-Api-Key": "ZbUbhpzNbCXwE9Cbn4nK9zYQT1aNxPuRXkYLjJB7pqa67"
+          }
+        })
+        .then(resonse => {
+          this.tweets = resonse.data;
+          this.err = false;
+        })
+        .catch(() => {
+          this.err = true;
+        });
+    },
     edit() {
       this.$router.push("/editProfile");
     },
-    selectTweet(){
+    selectTweet() {
       this.tweetsSelection = true;
-      this.followersSelection=false;
-      this.followingSelection=false;
+      this.followersSelection = false;
+      this.followingSelection = false;
     },
-    selectFolowers(){
+    selectFolowers() {
       this.tweetsSelection = false;
-      this.followersSelection=true;
-      this.followingSelection=false;
+      this.followersSelection = true;
+      this.followingSelection = false;
     },
-    selectFolowing(){
+    selectFolowing() {
       this.tweetsSelection = false;
-      this.followersSelection=false;
-      this.followingSelection=true;
+      this.followersSelection = false;
+      this.followingSelection = true;
     }
-
   }
 };
 </script>
@@ -182,18 +197,16 @@ export default {
     width: 100%;
     border-top: 2px solid #e1e8ed;
     button {
-    font-family: "Dosis", sans-serif;
-    font-size: 16px;
-    width: 30%;
-    background-color: white;
-    border: 0px;
-    
+      font-family: "Dosis", sans-serif;
+      font-size: 16px;
+      width: 30%;
+      background-color: white;
+      border: 0px;
+    }
   }
-  }
-  
 }
 .selection {
-      color: #1da1f2;
-      border-bottom: 2px solid #1da1f2;
-    }
+  color: #1da1f2;
+  border-bottom: 2px solid #1da1f2;
+}
 </style>

@@ -6,19 +6,22 @@
         alt="porfile cover photo"
       />
     </div>
+    <p v-if="userErr">
+      Something went wong while loading user Info
+    </p>
     <div id="initilals" v-if="user.username"><h1>{{ user.username[0]}}</h1></div>
 
     <div id="details">
       <p id="username">{{ user.username }}</p>
-      <button class="follow" @click="follow(user)" v-if="!isfollowed">Follow</button>
-    <button class="unfollow" @click="unfollow(user)" v-if="isfollowed">Unfollow</button>
+      <button  class="follow" @click="follow(user)" v-if="!isfollowed" :disabled="disable">Follow</button>
+    <button class="unfollow" @click="unfollow(user)" v-if="isfollowed" :disabled="disable">Unfollow</button>
       <p id="email">{{ user.email }}</p>
       <p id="bio">{{ user.bio }}</p>
     </div>
     
 
     
-
+    <p v-if="tweets.length==0"> There is no tweets to show </p>
     <tweetDisplay v-for="tweet in tweets" :key="tweet.id" :Tweet="tweet" />
 
     <h2 v-if="err">Somthing went Wrong while downloading the tweets</h2>
@@ -45,8 +48,34 @@ export default {
       
     } else if (cookies.get("token") == undefined) 
     this.$router.push("/signin");
-  
-    axios.request({
+    this.getUserDetails();
+    this.getTweets();
+    
+   
+  },
+  data() {
+    return {
+      tweets: [],
+      err: false,
+      userErr:false,
+      disable:false,
+      user: {}
+    };
+  },
+  computed: {
+    userId() {
+      return this.$store.state.selectedUser;
+    },
+    myUser(){
+      return this.$store.state.user
+    },
+    isfollowed() {
+      return this.$store.getters.checkFollowing;
+    }
+  },
+  methods: {
+    getUserDetails(){
+      axios.request({
       url: "https://tweeterest.ml/api/users",
       method: "GET",
       params: {
@@ -58,9 +87,14 @@ export default {
       }
     }).then((response)=>{
         this.user=response.data[0];
+        this.userErr=false;
         
-    }).catch(()=>{});
-    axios
+    }).catch(()=>{
+      this.userErr=true;
+    });
+    },
+    getTweets(){
+       axios
       .request({
         url: "https://tweeterest.ml/api/tweets",
         method: "GET",
@@ -79,27 +113,9 @@ export default {
       .catch(() => {
         this.err = true;
       });
-  },
-  data() {
-    return {
-      tweets: [],
-      err: false,
-      user: {}
-    };
-  },
-  computed: {
-    userId() {
-      return this.$store.state.selectedUser;
     },
-    myUser(){
-      return this.$store.state.user
-    },
-    isfollowed() {
-      return this.$store.getters.checkFollowing;
-    }
-  },
-  methods: {
     follow(user) {
+      this.disable=true;
       axios
         .request({
           url: "https://tweeterest.ml/api/follows",
@@ -115,10 +131,15 @@ export default {
         })
         .then(()=> {
           this.$store.commit("addFollowing", user);
+          this.disable=false;
         })
-        .catch(() => {});
+        .catch(() => { 
+          alert("Somthing went wrong in following this user");
+          this.disable=false;
+        });
     },
     unfollow(user) {
+      this.disable=true;
       axios
         .request({
           url: "https://tweeterest.ml/api/follows",
@@ -134,8 +155,12 @@ export default {
         })
         .then(() => {
           this.$store.commit("removeFollowing", user);
+          this.disable=false;
         })
-        .catch(() => {});
+        .catch(() => {
+          alert("Somthing went wrong in unfollowing this user");
+          this.disable=false;
+        });
     }
   }
 };
