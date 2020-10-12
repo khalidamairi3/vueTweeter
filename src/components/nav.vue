@@ -49,6 +49,7 @@ export default {
 
 <style lang="scss" scoped>
 #nav {
+  background-color: white;
   height: 10vh;
   width: 100%;
   position: fixed;

@@ -77,10 +77,11 @@ export default {
 
 <style lang="scss" scoped>
 #login {
+  margin-top: 25%;
   text-transform: capitalize;
   letter-spacing: 0.4vw;
-  height: 50%;
-  width: 90%;
+  min-height: 50vh;
+  width: 90vw;
   display: grid;
   justify-items: center;
   align-items: center;
@@ -97,15 +98,15 @@ export default {
     margin-top: 2vh;
     width: 40%;
     height: 6vh;
-    background-color: #00cecb;
+    background-color: #1da1f2;
     color: white;
     border-radius: 15px 15px 15px 15px;
-    border: 1px solid #00cecb;
+    border: 1px solid #1da1f2;
 
     &:hover {
-      border: 1px solid #00cecb;
+      border: 1px solid #1da1f2;
       background-color: white;
-      color: #00cecb;
+      color: #1da1f2;
       transition: all 0.2s ease-in;
       box-shadow: 2px 2px #92b4a7;
     }

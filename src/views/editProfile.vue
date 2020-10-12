@@ -23,7 +23,12 @@ export default {
       this.$store.dispatch("restart");
     } else if (cookies.get("token") == undefined) 
     this.$router.push("/signin");
-  }
+  },
+  computed: {
+      user() {
+          return this.$store.state.user; 
+      }
+  },
 };
 </script>
 

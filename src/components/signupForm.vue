@@ -1,5 +1,5 @@
 <template>
-  <div id="signup">
+  <div class="userInfo">
     <h1>Sign Up Page</h1>
     <label for="Email"> Email</label>
     <input type="text" name="Email" v-model="email" />
@@ -68,7 +68,6 @@ export default {
           }
         })
         .then(response => {
-          console.log(response);
           if (response.data.loginToken != undefined) {
             cookies.set("token", response.data.loginToken);
             this.$store.commit("setUser", response.data);
@@ -88,50 +87,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-#signup {
-  text-transform: capitalize;
-  letter-spacing: 0.8vw;
-  min-height: 80%;
-  width: 90%;
-  display: grid;
-  justify-items: center;
-  align-items: center;
-  border-radius: 15px 15px 15px 15px;
-  border: 1px solid #92b4a7;
 
-  input {
-    width: 90%;
-    height: 6vh;
-    border-radius: 10px 10px 10px 10px;
-    font-family: "Courier New", Courier, monospace;
-  }
-  textarea {
-    width: 90%;
-    height: 12vh;
-    border-radius: 10px 10px 10px 10px;
-  }
-  p {
-    color: #3e000c;
-  }
-  button {
-    margin-top: 2vh;
-    width: 40%;
-    height: 6vh;
-    background-color: #00cecb;
-    color: white;
-    border-radius: 15px 15px 15px 15px;
-    border: 1px solid #00cecb;
-    text-transform: capitalize;
-    letter-spacing: 0.4vw;
-    margin-bottom: 2vh;
-
-    &:hover {
-      border: 1px solid #00cecb;
-      background-color: white;
-      color: #00cecb;
-      transition: all 0.2s ease-in;
-      box-shadow: 2px 2px #92b4a7;
-    }
-  }
-}
 </style>

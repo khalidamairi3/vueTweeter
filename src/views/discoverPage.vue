@@ -86,27 +86,6 @@ export default {
 <style lang="scss" scoped>
 #discoverPage {
   width: 100%;
-  #cover {
-    img {
-      width: 100%;
-      height: 25vh;
-      object-fit: cover;
-    }
-  }
-  #options {
-    width: 100%;
-    border-top: 2px solid #e1e8ed;
-    button {
-      font-family: "Dosis", sans-serif;
-      font-size: 16px;
-      width: 30%;
-      background-color: white;
-      border: 0px;
-    }
-    .selection {
-      color: #1da1f2;
-      border-bottom: 2px solid #1da1f2;
-    }
-  }
+
 }
 </style>

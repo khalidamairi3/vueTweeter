@@ -3,7 +3,7 @@
     <p class="username" @click="selectUser(comment.userId)">
       {{ comment.username }}
     </p>
-    <p class="date">{{ comment.createdAt }}</p>
+    <p class="date">{{ calculateDate()}}</p>
     <div v-if="user.userId == comment.userId">
       <i @click="editToShow()" id="myBtn" class="far fa-edit"></i>
       <i @click="Delete(comment.commentId)" class="fas fa-times"></i>
@@ -101,7 +101,28 @@ export default {
     closeModal() {
       document.getElementById("commentModal").style.display = "none";
     },
-    
+    calculateDate(){
+      let now = new Date();
+      let date =new Date (this.comment.createdAt);
+      if(now.getMonth()==date.getMonth()){
+          let days = now.getDate()-date.getDate();
+          let hours =now.getHours()-date.getHours();
+          let mins = now.getMinutes()-date.getMinutes();
+          if(days != 0){
+            return days + " days ago";
+          }
+          else if(hours!=0){
+            return hours + " hours ago ";
+          }
+          else if (mins !=0){
+            return mins + " minutes ago";
+          }
+          else {
+            return "seconds ago"
+          }
+      }
+      return date.toLocaleString();
+    },
     updateComment(id, content) {
       this.editDisable=true;
       axios.request({
@@ -126,6 +147,7 @@ export default {
           this.err = true;
         });
     },
+    
     Delete(id) {
       if(this.deleteDisable){
         return
@@ -227,91 +249,11 @@ export default {
         }
 
     }
-    .date{
-        
-        color: #92B4A7;
-        font-size: 15px;
-    }
 
-    .fa-heart{
-        color: rgb(167, 16, 16);
-    }
-    
-    .content{
-        font-size: 18px;
-        grid-column: span 3;
-
-    }
   
 }
 
-.modal {
-    display: none; /* Hidden by default */
-    position: fixed; /* Stay in place */
-    z-index: 1; /* Sit on top */
-    left: 0;
-    top: 0;
-    width: 100%; /* Full width */
-    height: 100%; /* Full height */
-    overflow: auto; /* Enable scroll if needed */
-    background-color: rgb(0,0,0); /* Fallback color */
-    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-  }
   
-  /* Modal Content/Box */
-  .modal-content {
-    display: grid;
-    justify-content: center;
-    align-content: center;
-    background-color: #fefefe;
-    margin: 15% auto; /* 15% from the top and centered */
-    padding: 20px;
-    border: 1px solid #888;
-    width: 80%; /* Could be more or less, depending on screen size */
-    letter-spacing: 0.5vw;
-    textarea{
-        width: 80%;
-    }
-    button{
-        margin-top: 2vh;
-        background-color: white;
-        height: 6vh;
-        width: 20vw;
-        background-color: #00CECB;
-        color: white;
-       
-        border: 1px solid  #00CECB ;
-        
-
-        &:hover{
-            border: 1px solid  #00CECB ;
-            background-color:white;
-            color: #00CECB;
-            transition: all 0.2s ease-in;
-            box-shadow: 2px 2px #92B4A7;
-            
-
-        }
-
-    }
-  }
   
-  /* The Close Button */
-  .close {
-    color: #aaa;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
-  }
-  
-  .close:hover,
-  .close:focus {
-    color: black;
-    text-decoration: none;
-    cursor: pointer;
-  }
-  .deleted{
-    display: none;
-  }
 
 </style>

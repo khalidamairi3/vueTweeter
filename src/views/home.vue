@@ -1,5 +1,6 @@
 <template>
   <div id="home">
+    <h2> {{ "Hi " + user.username}}</h2>
     <createTweet />
     <homeTweets v-if="tweetsReady" />
     <navBar />
@@ -44,5 +45,10 @@ export default {
 <style lang="scss" scoped>
 #home {
   width: 100%;
+  h2{
+      padding-bottom:2vh ;
+      margin-bottom: 2vh ;
+      border-bottom: 3px solid #e1e8ed ;
+  }
 }
 </style>
