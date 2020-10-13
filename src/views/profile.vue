@@ -53,10 +53,12 @@
         <usersPage v-if="followingSelection" :users="following" />
       </div>
     </div>
+    <addsPage/>
   </div>
 </template>
 
 <script>
+import addsPage from "../components/adds"
 import cookies from "vue-cookies";
 import navBar from "../components/nav";
 import usersPage from "../components/users";
@@ -69,7 +71,8 @@ export default {
   components: {
     tweetDisplay,
     usersPage,
-    navBar
+    navBar,
+    addsPage
   },
   async mounted() {
     if (this.user.userId == undefined && cookies.get("token") != undefined) {
@@ -116,6 +119,7 @@ export default {
         })
         .then(resonse => {
           this.tweets = resonse.data;
+          this.tweets = this.tweets.reverse();
           this.err = false;
         })
         .catch(() => {
@@ -145,6 +149,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-#profile {
-}
+
 </style>

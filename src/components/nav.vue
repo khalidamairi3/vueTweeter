@@ -1,14 +1,14 @@
 <template>
   <div id="nav">
-    <router-link to="/home"><i class="fas fa-2x fa-home"></i></router-link>
+    <router-link to="/home"><i class="fas fa-2x fa-home"> <h1 class="desktop"> Home</h1></i></router-link>
     <router-link to="/discover"
-      ><i class="fas fa-2x fa-search"></i
+      ><i class="fas fa-2x fa-search"><h1 class="desktop"> Discover</h1></i
     ></router-link>
     <router-link to="/profile"
-      ><i class="fas fa-2x fa-user-circle"></i
+      ><i class="fas fa-2x fa-user-circle"><h1 class="desktop"> Profile</h1></i
     ></router-link>
     <router-link to="/signin"
-      ><i @click="logout" class="fas fa-2x fa-sign-out-alt"></i
+      ><i @click="logout" class="fas fa-2x fa-sign-out-alt"><h1 class="desktop"> Logout</h1></i
     ></router-link>
   </div>
 </template>
@@ -72,6 +72,15 @@ export default {
         grid-template-columns: 1fr;
         height: 60vh;
 
+    }
+
+}
+
+@media only screen and (min-width: 1000px) {
+    #nav {
+         a {
+    color: #657786;
+  }
     }
 
 }

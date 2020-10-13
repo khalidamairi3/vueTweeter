@@ -44,10 +44,12 @@
         <h2 v-if="err">Somthing went Wrong while downloading the tweets</h2>
       </div>
     </div>
+    <addsPage/>
   </div>
 </template>
 
 <script>
+import addsPage from "../components/adds"
 import navBar from "../components/nav";
 import axios from "axios";
 import tweetDisplay from "../components/tweet";
@@ -57,7 +59,8 @@ export default {
   name: "user-profile",
   components: {
     tweetDisplay,
-    navBar
+    navBar,
+    addsPage
   },
   async mounted() {
     if (this.myUser.userId == undefined && cookies.get("token") != undefined) {

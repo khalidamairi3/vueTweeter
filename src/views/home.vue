@@ -6,12 +6,14 @@
             <createTweet />
             <homeTweets v-if="tweetsReady" />
       </div>
+      <addsPage/>
     
     
   </div>
 </template>
 
 <script>
+import addsPage from "../components/adds"
 import cookies from "vue-cookies";
 import navBar from "../components/nav";
 import createTweet from "../components/createTweet";
@@ -21,7 +23,8 @@ export default {
   components: {
     homeTweets,
     createTweet,
-    navBar
+    navBar,
+    addsPage
   },
   mounted() {
     if (this.user.userId == undefined && cookies.get("token") != undefined) {

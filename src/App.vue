@@ -244,6 +244,12 @@ textarea {
 #space{
   height: 10vh;
 }
+button{
+  outline: none;
+}
+.desktop{
+  display: none;
+}
 
 @media only screen and (min-width: 600px) {
   .userInfo {
@@ -258,6 +264,9 @@ textarea {
 
   h1 {
     font-size: 36px;
+    position: relative;
+     bottom: 2.5vh;
+    left: 0.3vw;
     
   }
 }
@@ -285,18 +294,7 @@ textarea {
    
   }
 }
-.modal {
-  display: none; /* Hidden by default */
-  position: fixed; /* Stay in place */
-  z-index: 15; /* Sit on top */
-  left: 0;
-  top: 0;
-  width: 100%; /* Full width */
-  height: 100%; /* Full height */
-  overflow: auto; /* Enable scroll if needed */
-  background-color: rgb(0, 0, 0); /* Fallback color */
-  background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
-}
+
 
 .modal-content {
   width:70%; /* Could be more or less, depending on screen size */
@@ -320,5 +318,52 @@ textarea {
   height: 0vh;
 }
 } 
+
+@media only screen and (min-width: 1000px) {
+  .desktop{
+    display: inline;
+    font-size: 24px;
+    position: relative;
+    bottom: 1vh;
+  }
+    #home,#profile,#discoverPage,#userProfile{
+  display: grid;
+  grid-template-columns: 3fr 8fr 2fr;
+}
+#initilals {
+  margin-left: 45%;
+
+  h1 {
+    font-size: 40px;
+    position: relative;
+    bottom: 4vh;
+    left: 0.3vw;
+    
+  }
+}
+
+.userInfo {
+  // width: 100%;
+  margin-top: 5vh ;
+  min-height: 60%;
+  width: 70%;
+
+
+  input {
+    width: 90%;
+    height: 4vh;
+    border-radius: 10px 10px 10px 10px;
+    font-family: "Courier New", Courier, monospace;
+  }
+  textarea {
+    height: 8vh;
+   
+  }
+ 
+  
+  }
+
+  
+}
 
 </style>

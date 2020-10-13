@@ -118,4 +118,12 @@ export default {
     width: 70vw;
   }
 }
+
+@media only screen and (min-width: 1000px) {
+  #login {
+    margin-top: 10vh ;
+    height: 80vh;
+    width: 50vw;
+  }
+}
 </style>

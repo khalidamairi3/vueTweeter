@@ -108,7 +108,7 @@ export default {
     border-radius: 15px 15px 15px 15px;
   }
   #toComment {
-    color: #26547c;
+    color: #1da1f2;
   }
 }
 #addComment {

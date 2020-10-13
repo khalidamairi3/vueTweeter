@@ -30,12 +30,13 @@
     <usersPage v-if="usersSelection" :users="otherUsers" />
 
       </div>
-    
+    <addsPage />
     
   </div>
 </template>
 
 <script>
+import addsPage from "../components/adds"
 import cookies from "vue-cookies";
 import navBar from "../components/nav";
 import trendingPage from "../components/trending";
@@ -47,7 +48,9 @@ export default {
     dicoverComponent,
     trendingPage,
     usersPage,
-    navBar
+    navBar,
+    addsPage
+
   },
   mounted() {
     if (this.user.userId == undefined && cookies.get("token") != undefined) {

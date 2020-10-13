@@ -1,5 +1,5 @@
 <template>
-  <div class="comment" v-bind:class="{deleted:deleted}" >
+  <div data-aos="fade-down" data-aos-duration="1000" class="comment" v-bind:class="{deleted:deleted}" >
     <p class="username" @click="selectUser(comment.userId)">
       {{ comment.username }}
     </p>
@@ -106,7 +106,7 @@ export default {
       let date =new Date (this.comment.createdAt);
       if(now.getMonth()==date.getMonth()){
           let days = now.getDate()-date.getDate();
-          let hours =now.getHours()-date.getHours();
+          let hours =now.getHours()-date.getHours()+6;
           let mins = now.getMinutes()-date.getMinutes();
           if(days != 0){
             return days + " days ago";
@@ -244,7 +244,7 @@ export default {
         font-size: 18px;
 
         &:hover{
-            color: #00CECB;
+            color: #1da1f2;
             transition: all 0.1s ease-in;
         }
 

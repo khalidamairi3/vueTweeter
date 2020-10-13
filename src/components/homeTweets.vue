@@ -1,5 +1,5 @@
 <template>
-  <div id>
+  <div id="HomeTweets">
     <h2 v-if="tweets.length == 0">you have no tweets to display</h2>
     <tweetDisplay v-for="tweet in tweets" :key="tweet.tweetId" :Tweet="tweet" />
   </div>
@@ -56,6 +56,11 @@ export default {
           })
           .then(resonse => {
             this.tweets = this.tweets.concat(resonse.data);
+            if(i==users.length-1){
+
+              this.tweets=this.tweets.reverse();
+
+            }
           })
           .catch(() => {
             alert("Somthing went Wrong");
@@ -67,5 +72,6 @@ export default {
 </script>
 
 <style lang="sass" scoped>
+
 
 </style>
