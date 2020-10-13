@@ -7,6 +7,7 @@ import HomeePage from "../views/home.vue";
 import discoverPage from "../views/discoverPage.vue";
 import userProfile from "../views/userprofile";
 import editProfile from "../views/editProfile";
+import landingPage from "../views/landing"
 Vue.use(VueRouter);
 
 const routes = [
@@ -14,6 +15,11 @@ const routes = [
     path: "/signup",
     name: "signup-page",
     component: signupPage
+  },
+  {
+    path: "/",
+    name: "landing-page",
+    component: landingPage
   },
   {
     path: "/editProfile",
