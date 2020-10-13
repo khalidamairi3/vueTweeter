@@ -1,7 +1,7 @@
 <template>
   <div id="users">
     <h3 v-if="users.length == 0">There is no users to show in this list</h3>
-    <div class="user" v-for="user in users" :key="user.userId">
+    <div data-aos="fade-left" data-aos-duration="1000" class="user" v-for="user in users" :key="user.userId">
       <p @click="selectUser(user.userId)">{{ user.username }}</p>
     </div>
   </div>

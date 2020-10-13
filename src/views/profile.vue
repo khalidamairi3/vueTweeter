@@ -1,50 +1,58 @@
 <template>
   <div id="profile">
-    <div id="cover">
-      <img
-        src="https://besthqwallpapers.com/img/original/111844/twitter-turquoise-logo-4k-turquoise-brickwall-twitter-logo-brands.jpg"
-        alt="porfile cover photo"
-      />
-    </div>
-    <div id="initilals">
-      <h1 v-if="user.username != undefined">{{ user.username[0] }}</h1>
-    </div>
-
-    <div id="details">
-      <p id="username">{{ user.username }}</p>
-      <button @click="edit">Edit</button>
-      <p id="email">{{ user.email }}</p>
-      <p id="bio">{{ user.bio }}</p>
-    </div>
-    <div id="options">
-      <button
-        @click="selectTweet"
-        v-bind:class="{ selection: tweetsSelection }"
-      >
-        Tweets
-      </button>
-      <button
-        @click="selectFolowers"
-        v-bind:class="{ selection: followersSelection }"
-      >
-        Followers
-      </button>
-      <button
-        @click="selectFolowing"
-        v-bind:class="{ selection: followingSelection }"
-      >
-        Follwing
-      </button>
-    </div>
-
-    <div v-if="tweetsSelection">
-      <p v-if="tweets.length==0"> Thee is no tweets to show</p>
-      <tweetDisplay v-for="tweet in tweets" :key="tweet.id" :Tweet="tweet" />
-      <h2 v-if="err">Something Went Wrong</h2>
-    </div>
-    <usersPage v-if="followersSelection" :users="followers" />
-    <usersPage v-if="followingSelection" :users="following" />
     <navBar />
+
+    <div>
+      <div id="cover">
+        <img
+          src="https://besthqwallpapers.com/img/original/111844/twitter-turquoise-logo-4k-turquoise-brickwall-twitter-logo-brands.jpg"
+          alt="porfile cover photo"
+        />
+      </div>
+      <div id="initilals">
+        <h1 v-if="user.username != undefined">{{ user.username[0] }}</h1>
+      </div>
+
+      <div id="details">
+        <p id="username">{{ user.username }}</p>
+        <button @click="edit">Edit</button>
+        <p id="email">{{ user.email }}</p>
+        <p id="bio">{{ user.bio }}</p>
+      </div>
+      <div id="options">
+        <button
+          @click="selectTweet"
+          v-bind:class="{ selection: tweetsSelection }"
+        >
+          Tweets
+        </button>
+        <button
+          @click="selectFolowers"
+          v-bind:class="{ selection: followersSelection }"
+        >
+          Followers
+        </button>
+        <button
+          @click="selectFolowing"
+          v-bind:class="{ selection: followingSelection }"
+        >
+          Follwing
+        </button>
+      </div>
+      <div class="userDisplay">
+        <div v-if="tweetsSelection">
+          <p v-if="tweets.length == 0">Thee is no tweets to show</p>
+          <tweetDisplay
+            v-for="tweet in tweets"
+            :key="tweet.id"
+            :Tweet="tweet"
+          />
+          <h2 v-if="err">Something Went Wrong</h2>
+        </div>
+        <usersPage v-if="followersSelection" :users="followers" />
+        <usersPage v-if="followingSelection" :users="following" />
+      </div>
+    </div>
   </div>
 </template>
 
@@ -138,8 +146,5 @@ export default {
 
 <style lang="scss" scoped>
 #profile {
-
-  
 }
-
 </style>

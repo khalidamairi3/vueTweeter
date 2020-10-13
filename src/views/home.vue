@@ -1,9 +1,13 @@
 <template>
   <div id="home">
-    <h2> {{ "Hi " + user.username}}</h2>
-    <createTweet />
-    <homeTweets v-if="tweetsReady" />
-    <navBar />
+      <navBar />
+      <div>
+          <h2> {{ "Hi " + user.username}}</h2>
+            <createTweet />
+            <homeTweets v-if="tweetsReady" />
+      </div>
+    
+    
   </div>
 </template>
 
@@ -51,4 +55,5 @@ export default {
       border-bottom: 3px solid #e1e8ed ;
   }
 }
+
 </style>

@@ -91,6 +91,8 @@ input{
   }
 }
 #options {
+  position: relative;
+  bottom: 8vh;
   width: 100%;
   border-top: 2px solid #e1e8ed;
   button {
@@ -114,7 +116,7 @@ textarea {
 .modal {
   display: none; /* Hidden by default */
   position: fixed; /* Stay in place */
-  z-index: 1; /* Sit on top */
+  z-index: 15; /* Sit on top */
   left: 0;
   top: 0;
   width: 100%; /* Full width */
@@ -142,19 +144,23 @@ textarea {
     background-color: white;
     height: 6vh;
     width: 20vw;
-    background-color: #00cecb;
+    background-color: #1da1f2;
     color: white;
 
-    border: 1px solid #00cecb;
+    border: 1px solid #1da1f2;
 
     &:hover {
-      border: 1px solid #00cecb;
+      border: 1px solid #1da1f2;
       background-color: white;
-      color: #00cecb;
+      color: #1da1f2;
       transition: all 0.2s ease-in;
       box-shadow: 2px 2px #92b4a7;
     }
   }
+}
+.userDisplay{
+  position: relative;
+  bottom: 8vh;
 }
 
 /* The Close Button */
@@ -238,4 +244,81 @@ textarea {
 #space{
   height: 10vh;
 }
+
+@media only screen and (min-width: 600px) {
+  .userInfo {
+    font-size: 24px;
+    width: 70%;
+  }
+  #home,#profile,#discoverPage,#userProfile{
+  display: grid;
+  grid-template-columns: 2fr 8fr;
+}
+#initilals {
+
+  h1 {
+    font-size: 36px;
+    
+  }
+}
+#details {
+  
+  #username {
+   font-size: 24px;
+  }
+  #email,
+  #bio {
+    font-size: 20px;
+  }
+  
+  button {
+   
+    font-size: 18px;
+   
+  }
+}
+#options {
+  
+  button {
+    
+    font-size: 20px;
+   
+  }
+}
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 15; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0, 0, 0); /* Fallback color */
+  background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+}
+
+.modal-content {
+  width:70%; /* Could be more or less, depending on screen size */
+  letter-spacing: 0.5vw;
+  p{
+    position:relative;
+    right: 15vw;
+  }
+  textarea {
+    grid-column: span 2;
+    width: 100%;
+    height: 10vh;
+  }
+  button {
+   
+    font-size: 18px;
+    
+  }
+}
+#space{
+  height: 0vh;
+}
+} 
+
 </style>

@@ -112,4 +112,10 @@ export default {
     }
   }
 }
+@media only screen and (min-width: 600px) {
+  #login {
+    font-size: 24px;
+    width: 70vw;
+  }
+}
 </style>

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="signup">
     <signup-form />
   </div>
 </template>
@@ -16,9 +16,9 @@ export default {
 </script>
 
 <style scoped>
-div {
+#signup{
   width: 100%;
-  height: 100%;
+  height: 100vh;
   display: grid;
   justify-items: center;
   align-items: center;

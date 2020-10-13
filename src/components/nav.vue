@@ -65,4 +65,14 @@ export default {
     color: #1da1f2;
   }
 }
+@media only screen and (min-width: 600px) {
+    #nav {
+        position: relative;
+        display: grid;
+        grid-template-columns: 1fr;
+        height: 60vh;
+
+    }
+
+}
 </style>

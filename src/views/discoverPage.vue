@@ -1,6 +1,8 @@
 <template>
   <div id="discoverPage">
-    <div id="cover">
+      <navBar />
+      <div>
+          <div id="cover">
       <img
         src="https://assets.materialup.com/uploads/f05e85d3-6423-4bbd-a956-eec379f9729b/preview-image.jpg"
         alt="discover cover photo"
@@ -26,7 +28,10 @@
     <dicoverComponent v-if="tweetsSelection" />
     <trendingPage v-if="trendingSelection" />
     <usersPage v-if="usersSelection" :users="otherUsers" />
-    <navBar />
+
+      </div>
+    
+    
   </div>
 </template>
 
@@ -88,4 +93,11 @@ export default {
   width: 100%;
 
 }
+@media only screen and (min-width: 600px) {
+    #options{
+        position: relative;
+        bottom: 0;
+    }
+}
+
 </style>
