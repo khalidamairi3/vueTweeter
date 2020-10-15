@@ -54,11 +54,11 @@ export default {
               "X-Api-Key": "ZbUbhpzNbCXwE9Cbn4nK9zYQT1aNxPuRXkYLjJB7pqa67"
             }
           })
-          .then(resonse => {
-            this.tweets = this.tweets.concat(resonse.data);
+          .then(response => {
+            this.tweets = this.tweets.concat(response.data);
+            
             if(i==users.length-1){
-
-              this.tweets=this.tweets.reverse();
+              this.tweets=this.tweets.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
 
             }
           })

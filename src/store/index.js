@@ -69,7 +69,7 @@ export default new Vuex.Store({
     },
     getFollowers(context) {
       axios.request({
-        url: "https://tweeterest.ml/api/follows",
+        url: "https://tweeterest.ml/api/followers",
         method: "GET",
         params: {
           userId: context.state.user.userId,

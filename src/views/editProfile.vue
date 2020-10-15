@@ -1,8 +1,12 @@
 <template>
   <div id="profileEdit">
-    <deleteProfile />
+     <navBar />
+    <div id="editContent">
+      <deleteProfile />
     <editProfile />
-    <navBar />
+    </div>
+    
+   
   </div>
 </template>
 
@@ -37,5 +41,10 @@ export default {
   width: 100%;
   display: grid;
   justify-items: center;
+}
+
+#editContent{
+  width: 100%;
+  padding-bottom: 10vh ;
 }
 </style>

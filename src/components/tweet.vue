@@ -1,17 +1,19 @@
 <template>
-  <div data-aos="fade-down" data-aos-duration="1000"  class="tweet" v-bind:class="{ deleted: deleted }">
+  <div data-aos="fade-down" v-bind:class="{ deleted: deleted , tweet: !deleted }"
+  >
     <p class="username" @click="selectUser(tweet.userId)">
       {{ tweet.username }}
     </p>
-    <p class="date">{{ calculateDate() }}</p>
+    <p class="date">{{ tweet.createdAt }}</p>
     <div v-if="isuser">
-      <i @click="editToShow()" id="myBtn" class="far fa-edit"></i>
+      <i @click="editToShow(tweet.tweetId)" id="myBtn" class="far fa-edit"></i>
       <i @click="Delete(tweet.tweetId)" class="fas fa-times"></i>
     </div>
-    <div id="tweetModal" class="modal">
+  
+    <div :id="'tweetModal'+tweet.tweetId" class="modal">
       <!-- Modal content -->
       <div class="modal-content">
-        <span @click="closeModal()" class="close">&times;</span>
+        <span @click="closeModal(tweet.tweetId)" class="close">&times;</span>
         <p>Edit your tweet</p>
         <textarea v-model="content"></textarea>
         <button @click="edit(tweet.tweetId, content)">Edit</button>
@@ -56,9 +58,9 @@ export default {
     }
   },
   mounted() {
+     this.$modal.show('example')
     if (this.user.userId == this.tweet.userId) this.isuser = true;
     this.checkLiked();
-   
   },
   data() {
     return {
@@ -116,35 +118,30 @@ export default {
       cookies.set("selectedUser", userId);
       this.$router.push("/userprofile");
     },
-    editToShow() {
-      document.getElementById("tweetModal").style.display = "block";
+    editToShow(id) {
+      document.getElementById("tweetModal"+id).style.display = "block";
     },
-    closeModal() {
-      document.getElementById("tweetModal").style.display = "none";
+    closeModal(id) {
+      document.getElementById("tweetModal"+id).style.display = "none";
     },
-    calculateDate(){
+    calculateDate() {
       let now = new Date();
-      let date =new Date (this.Tweet.createdAt);
-      if(now.getMonth()==date.getMonth()){
-          let days = now.getDate()-date.getDate();
-          let hours =now.getHours()-date.getHours()+6;
-          let mins = now.getMinutes()-date.getMinutes();
-          if(days != 0){
-            return days + " days ago";
-          }
-          else if(hours!=0){
-            return hours + " hours ago ";
-          }
-          else if (mins !=0){
-            return mins + " minutes ago";
-          }
-          else {
-            return "seconds ago"
-          }
+      let date = new Date(this.Tweet.createdAt);
+      if (now.getMonth() == date.getMonth()) {
+        let days = now.getDate() - date.getDate() +1;
+        let hours = now.getHours() - date.getHours() + 6 ;
+        let mins = now.getMinutes() - date.getMinutes();
+        if (days != 0) {
+          return days + " days ago";
+        } else if (hours != 0) {
+          return hours + " hours ago ";
+        } else if (mins != 0) {
+          return mins + " minutes ago";
+        } else {
+          return "seconds ago";
+        }
       }
       return date.toLocaleString();
-      
-      
     },
     edit(tweetId, content) {
       if (this.editDisable) {
@@ -169,7 +166,7 @@ export default {
           this.tweet.content = response.data.content;
           this.editDisable = false;
           this.err = false;
-          document.getElementById("tweetModal").style.display = "none";
+          document.getElementById("tweetModal"+this.Tweet.tweetId).style.display = "none";
         })
         .catch(() => {
           this.editDisable = false;
@@ -265,6 +262,7 @@ export default {
 
 <style lang="scss" scoped>
 .tweet {
+  z-index: 1;
   display: grid;
   align-items: center;
   grid-template-columns: 3fr 2fr 1fr;
@@ -275,16 +273,15 @@ export default {
     font-size: 24px;
 
     &:hover {
-      color: #00cecb;
+      color: #1da1f2;
       transition: all 0.1s ease-in;
     }
   }
-  
+
   .view {
     grid-column: span 2;
   }
 }
 
 /* Modal Content/Box */
-
 </style>

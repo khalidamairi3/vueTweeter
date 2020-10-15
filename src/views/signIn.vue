@@ -77,7 +77,7 @@ export default {
 
 <style lang="scss" scoped>
 #login {
-  margin-top: 25%;
+  align-self: center;
   text-transform: capitalize;
   letter-spacing: 0.4vw;
   min-height: 50vh;

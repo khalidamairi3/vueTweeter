@@ -51,6 +51,7 @@ export default {
 
 <style lang="scss" scoped>
 #home {
+    
   width: 100%;
   h2{
       padding-bottom:2vh ;

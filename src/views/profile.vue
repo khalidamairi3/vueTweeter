@@ -36,7 +36,7 @@
           @click="selectFolowing"
           v-bind:class="{ selection: followingSelection }"
         >
-          Follwing
+          Following
         </button>
       </div>
       <div class="userDisplay">

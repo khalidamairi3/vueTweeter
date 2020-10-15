@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <router-view />
-    <div id="space"></div>
+    
   </div>
 </template>
 
@@ -23,6 +23,12 @@ body {
 }
 input{
   outline: none;
+}
+[data-aos] {
+  pointer-events: none;
+  &.aos-animate {
+    pointer-events: auto;
+  }
 }
 
 #cover {
@@ -115,13 +121,12 @@ textarea {
 }
 .modal {
   display: none; /* Hidden by default */
-  position: fixed; /* Stay in place */
+  position: absolute; /* Stay in place */
   z-index: 15; /* Sit on top */
   left: 0;
   top: 0;
   width: 100%; /* Full width */
   height: 100%; /* Full height */
-  overflow: auto; /* Enable scroll if needed */
   background-color: rgb(0, 0, 0); /* Fallback color */
   background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
 }
@@ -131,9 +136,10 @@ textarea {
   justify-content: center;
   align-content: center;
   background-color: #fefefe;
-  margin: 15% auto; /* 15% from the top and centered */
   padding: 20px;
   border: 1px solid #888;
+  height: 75%;
+  margin-left: 10%;
   width: 80%; /* Could be more or less, depending on screen size */
   letter-spacing: 0.5vw;
   textarea {
@@ -142,7 +148,7 @@ textarea {
   button {
     margin-top: 2vh;
     background-color: white;
-    height: 6vh;
+    height: 4vh;
     width: 20vw;
     background-color: #1da1f2;
     color: white;
@@ -199,7 +205,8 @@ textarea {
   text-transform: capitalize;
   letter-spacing: 0.8vw;
   min-height: 80%;
-  width: 90%;
+  padding: 10%;
+  width: 100%;
   display: grid;
   justify-items: center;
   align-items: center;
@@ -241,9 +248,7 @@ textarea {
     }
   }
 }
-#space{
-  height: 10vh;
-}
+
 button{
   outline: none;
 }
@@ -256,7 +261,7 @@ button{
     font-size: 24px;
     width: 70%;
   }
-  #home,#profile,#discoverPage,#userProfile{
+  #home,#profile,#discoverPage,#userProfile,#profileEdit{
   display: grid;
   grid-template-columns: 2fr 8fr;
 }
@@ -265,7 +270,6 @@ button{
   h1 {
     font-size: 36px;
     position: relative;
-     bottom: 2.5vh;
     left: 0.3vw;
     
   }
@@ -315,6 +319,7 @@ button{
   }
 }
 #space{
+ 
   height: 0vh;
 }
 } 
@@ -326,7 +331,7 @@ button{
     position: relative;
     bottom: 1vh;
   }
-    #home,#profile,#discoverPage,#userProfile{
+    #home,#profile,#discoverPage,#userProfile,#profileEdit{
   display: grid;
   grid-template-columns: 3fr 8fr 2fr;
 }

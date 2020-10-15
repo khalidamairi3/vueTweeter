@@ -19,7 +19,7 @@
         @click="selectTrending"
         v-bind:class="{ selection: trendingSelection }"
       >
-        Ternding
+        Trending
       </button>
       <button @click="selectUser" v-bind:class="{ selection: usersSelection }">
         Users
@@ -96,11 +96,10 @@ export default {
   width: 100%;
 
 }
-@media only screen and (min-width: 600px) {
-    #options{
+#options{
         position: relative;
         bottom: 0;
     }
-}
+
 
 </style>

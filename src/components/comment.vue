@@ -1,25 +1,25 @@
 <template>
-  <div data-aos="fade-down" data-aos-duration="1000" class="comment" v-bind:class="{deleted:deleted}" >
+  <div data-aos="fade-down" v-bind:class="{deleted:deleted , comment:!deleted}" >
     <p class="username" @click="selectUser(comment.userId)">
       {{ comment.username }}
     </p>
     <p class="date">{{ calculateDate()}}</p>
     <div v-if="user.userId == comment.userId">
-      <i @click="editToShow()" id="myBtn" class="far fa-edit"></i>
+      <i @click="editToShow(comment.commentId)" :id=" 'myBtn' " class="far fa-edit"></i>
       <i @click="Delete(comment.commentId)" class="fas fa-times"></i>
     </div>
-    <div id="commentModal" class="modal">
+    <div :id=" 'commentModal'+comment.commentId " class="modal">
       <!-- Modal content >-- -->
       <div class="modal-content">
-        <span @click="closeModal()" class="close">&times;</span>
+        <span @click="closeModal( comment.commentId)" class="close">&times;</span>
         <p>Edit your comment</p>
-        <textarea rows="5" v-model="content"></textarea>
+        <textarea  v-model="content"></textarea>
         <button :disabled="editDisable" @click="updateComment(comment.commentId, content)">Edit</button>
         <h3 v-if="err">the comment has a limit of 200 characters</h3>
       </div>
     </div>
 
-    <p class="content">{{ comment.content }}</p>
+    <p class="content">{{ currentComment.content }}</p>
     <div>
           <i @click="like_unlike(comment.commentId)" class="fa-heart"  v-bind:class="{ fas: liked, far: !liked }"></i><span class="likes">  {{likedUsers.length}}</span>
       </div>
@@ -46,7 +46,7 @@ export default {
   },
   data() {
     return {
-      
+      currentComment:this.comment,
       content: "",
       likedUsers:[],
       liked:false,
@@ -95,35 +95,18 @@ export default {
       this.$store.commit("userToShow", userId);
       this.$router.push("/userprofile")
     },
-    editToShow() {
-      document.getElementById("commentModal").style.display = "block";
+    editToShow(id) {
+      document.getElementById("commentModal"+id).style.display = "block";
     },
-    closeModal() {
-      document.getElementById("commentModal").style.display = "none";
+    closeModal(id) {
+      document.getElementById("commentModal"+id).style.display = "none";
     },
     calculateDate(){
-      let now = new Date();
       let date =new Date (this.comment.createdAt);
-      if(now.getMonth()==date.getMonth()){
-          let days = now.getDate()-date.getDate();
-          let hours =now.getHours()-date.getHours()+6;
-          let mins = now.getMinutes()-date.getMinutes();
-          if(days != 0){
-            return days + " days ago";
-          }
-          else if(hours!=0){
-            return hours + " hours ago ";
-          }
-          else if (mins !=0){
-            return mins + " minutes ago";
-          }
-          else {
-            return "seconds ago"
-          }
-      }
       return date.toLocaleString();
     },
     updateComment(id, content) {
+      console.log(id + content);
       this.editDisable=true;
       axios.request({
           url: "https://tweeterest.ml/api/comments",
@@ -138,8 +121,9 @@ export default {
             "X-Api-Key": "ZbUbhpzNbCXwE9Cbn4nK9zYQT1aNxPuRXkYLjJB7pqa67"
           }
         }).then((response) => {
-          this.closeModal();
-          this.comment.content = response.data.content;
+          console.log(response.data);
+          this.closeModal(this.comment.commentId);
+          this.currentComment.content = response.data.content;
           this.editDisable=false;
           this.err = false;
         }).catch(() => {
@@ -238,6 +222,7 @@ export default {
     align-items: center;
     grid-template-columns: 3fr 2fr 1fr;
     width: 100%;
+    min-height: 30vh;
     border-top: solid 1px #92B4A7;
     .username{
         font-weight: bold;

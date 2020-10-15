@@ -7,11 +7,13 @@ import { faUserSecret } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import 'aos/dist/aos.css'
 import AOS from "aos";
+import VModal from 'vue-js-modal'
  
 library.add(faUserSecret)
  
 Vue.component('font-awesome-icon', FontAwesomeIcon)
  
+Vue.use(VModal)
 
 Vue.config.productionTip = false;
 
