@@ -6,12 +6,13 @@ import cookies from "vue-cookies"
 Vue.use(Vuex);
 
 export default new Vuex.Store({
+  //state data is the data the can be used by multiple components, after retrieving state data it is modified locally to avoid unneccessary api requests
   state: {
-    user: {},
+    user: {},//the user who is logged in 
     followingUsers: [],
     followersUsers: [],
     allUsers: [],
-    selectedUser: 0,
+    selectedUser: 0,//the user id of a specific user that the logged in user want to show his/her profile 
   },
   mutations: {
     setUser: function (state, user) {
@@ -38,6 +39,7 @@ export default new Vuex.Store({
         return user_f != user;
       })
     },
+    //this function to be called in logging out
     reset(state) {
       state.user = {};
       state.followingUsers = [];
@@ -102,6 +104,7 @@ export default new Vuex.Store({
 
 
     },
+    //this function to be called in case of refresh
     restart() {
       axios.request({
         url: "https://tweeterest.ml/api/users",

@@ -23,6 +23,7 @@ export default {
     navBar
   },
   mounted() {
+    // in case of refresh restore the data in vuex and wait for sometime so changes can be reflected in the component
     if (this.user.userId == undefined && cookies.get("token") != undefined) {
       this.$store.dispatch("restart");
     } else if (cookies.get("token") == undefined) 

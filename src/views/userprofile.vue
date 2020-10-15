@@ -1,3 +1,4 @@
+// this componet to show other users' profile
 <template>
   <div id="userProfile">
     <navBar />
@@ -44,12 +45,12 @@
         <h2 v-if="err">Somthing went Wrong while downloading the tweets</h2>
       </div>
     </div>
-    <addsPage/>
+    <addsPage />
   </div>
 </template>
 
 <script>
-import addsPage from "../components/adds"
+import addsPage from "../components/adds";
 import navBar from "../components/nav";
 import axios from "axios";
 import tweetDisplay from "../components/tweet";
@@ -63,10 +64,15 @@ export default {
     addsPage
   },
   async mounted() {
+    // in case of refresh restore the data in vuex and wait for sometime so changes can be reflected in the component
     if (this.myUser.userId == undefined && cookies.get("token") != undefined) {
       this.$store.dispatch("restart");
       await delay(800);
-    } else if (cookies.get("token") == undefined) this.$router.push("/signin");
+    }
+    // if the user is not logged in
+    else if (cookies.get("token") == undefined) {
+      this.$router.push("/signin");
+    }
     this.getUserDetails();
     this.getTweets();
   },
@@ -80,6 +86,7 @@ export default {
     };
   },
   computed: {
+    // the user Id of the user to e shown
     userId() {
       return this.$store.state.selectedUser;
     },
