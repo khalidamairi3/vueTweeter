@@ -101,7 +101,7 @@ export default {
     getUserDetails() {
       axios
         .request({
-          url: "https://tweeterest.ml/api/users",
+          url: "http://127.0.0.1:5000/api/users",
           method: "GET",
           params: {
             userId: this.userId
@@ -122,7 +122,7 @@ export default {
     getTweets() {
       axios
         .request({
-          url: "https://tweeterest.ml/api/tweets",
+          url: "http://127.0.0.1:5000/api/tweets",
           method: "GET",
           params: {
             userId: this.userId
@@ -144,7 +144,7 @@ export default {
       this.disable = true;
       axios
         .request({
-          url: "https://tweeterest.ml/api/follows",
+          url: "http://127.0.0.1:5000/api/follows",
           method: "POST",
           data: {
             loginToken: cookies.get("token"),
@@ -168,7 +168,7 @@ export default {
       this.disable = true;
       axios
         .request({
-          url: "https://tweeterest.ml/api/follows",
+          url: "http://127.0.0.1:5000/api/follows",
           method: "DELETE",
           data: {
             loginToken: cookies.get("token"),

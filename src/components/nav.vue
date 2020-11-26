@@ -32,7 +32,7 @@ export default {
     logout() {
       axios
         .request({
-          url: "https://tweeterest.ml/api/login",
+          url: "http://127.0.0.1:5000/api/login",
           method: "DELETE",
           data: {
             loginToken: cookies.get("token")
@@ -45,7 +45,7 @@ export default {
         .then(() => {
           cookies.remove("token");
           cookies.remove("userId");
-          cookies.remove("userSelection");
+          cookies.remove("selectedUser");
           this.$store.commit("reset");
           this.$router.push("/signin");
         })

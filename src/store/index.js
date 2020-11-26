@@ -52,7 +52,7 @@ export default new Vuex.Store({
   actions: {
     getFollowing(context) {
       axios.request({
-        url: "https://tweeterest.ml/api/follows",
+        url: "http://127.0.0.1:5000/api/follows",
         method: "GET",
         params: {
           userId: context.state.user.userId,
@@ -71,7 +71,7 @@ export default new Vuex.Store({
     },
     getFollowers(context) {
       axios.request({
-        url: "https://tweeterest.ml/api/followers",
+        url: "http://127.0.0.1:5000/api/followers",
         method: "GET",
         params: {
           userId: context.state.user.userId,
@@ -91,7 +91,7 @@ export default new Vuex.Store({
 
     getAllusers() {
       axios.request({
-        url: "https://tweeterest.ml/api/users",
+        url: "http://127.0.0.1:5000/api/users",
         method: "GET",
         headers: {
           "X-Api-Key": "ZbUbhpzNbCXwE9Cbn4nK9zYQT1aNxPuRXkYLjJB7pqa67"
@@ -107,7 +107,7 @@ export default new Vuex.Store({
     //this function to be called in case of refresh
     restart() {
       axios.request({
-        url: "https://tweeterest.ml/api/users",
+        url: "http://127.0.0.1:5000/api/users",
         method: "GET",
         headers: {
           "Content-Type": "application/json",

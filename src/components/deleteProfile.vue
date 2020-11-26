@@ -21,7 +21,7 @@ export default {
       let password = prompt("confirm your password to delete your profile");
       axios
         .request({
-          url: "https://tweeterest.ml/api/users",
+          url: "http://127.0.0.1:5000/api/users",
           method: "DELETE",
           data: {
             loginToken: cookies.get("token"),
@@ -33,8 +33,10 @@ export default {
           }
         })
         .then(() => {
-          this.$store.commit("resetUser");
           cookies.remove("token");
+          cookies.remove("userId");
+          cookies.remove("selectedUser");
+          this.$store.commit("reset");
           this.err = false;
           this.disable = true;
           this.$router.push("/signin");

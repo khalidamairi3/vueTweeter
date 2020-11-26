@@ -48,7 +48,7 @@ export default {
     getComments() {
       axios
         .request({
-          url: "https://tweeterest.ml/api/comments",
+          url: "http://127.0.0.1:5000/api/comments",
           method: "GET",
           params: {
             tweetId: this.tweetId
@@ -72,7 +72,7 @@ export default {
       this.disable = true;
       axios
         .request({
-          url: "https://tweeterest.ml/api/comments",
+          url: "http://127.0.0.1:5000/api/comments",
           method: "POST",
           data: {
             loginToken: cookies.get("token"),

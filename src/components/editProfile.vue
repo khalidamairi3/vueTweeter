@@ -51,7 +51,7 @@ export default {
       userData.loginToken = cookies.get("token");
       axios
         .request({
-          url: "https://tweeterest.ml/api/users",
+          url: "http://127.0.0.1:5000/api/users",
           method: "PATCH",
           data: userData,
           headers: {

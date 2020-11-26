@@ -23,15 +23,28 @@
     <div>
           <i @click="like_unlike(comment.commentId)" class="fa-heart"  v-bind:class="{ fas: liked, far: !liked }"></i><span class="likes">  {{likedUsers.length}}</span>
       </div>
+
+       <p class="view" v-if="!viewComments" @click="viewComments = true">
+      view replies
+    </p>
+    <p class="view" v-if="viewComments" @click="viewComments = false">
+      hide replies
+    </p>
+
+    <nestedComments v-if="viewComments" :commentId="comment.commentId" />
     
   </div>
 </template>
 
 <script>
+import nestedComments from "./nestedCommnets";
 import axios from "axios";
 import cookies from "vue-cookies";
 export default {
   name: "comment-display",
+  components: {
+    nestedComments,
+  },
   props: {
     comment: {
       type: Object,
@@ -54,7 +67,8 @@ export default {
       deleteDisable:false,
       editDisable:false,
       likeDisable:false,
-      err: false
+      err: false,
+      viewComments:false
     };
   },
   computed: {
@@ -65,7 +79,7 @@ export default {
   methods: {
     checkliked(){
       axios.request({
-      url:"https://tweeterest.ml/api/comment-likes",
+      url:"http://127.0.0.1:5000/api/comment-likes",
       method: "GET",
       params:{
         commentId:this.comment.commentId
@@ -109,7 +123,7 @@ export default {
       console.log(id + content);
       this.editDisable=true;
       axios.request({
-          url: "https://tweeterest.ml/api/comments",
+          url: "http://127.0.0.1:5000/api/comments",
           method: "PATCH",
           data: {
             loginToken: cookies.get("token"),
@@ -138,7 +152,7 @@ export default {
       }
       this.deleteDisable=true
       axios.request({
-          url: "https://tweeterest.ml/api/comments",
+          url: "http://127.0.0.1:5000/api/comments",
           method: "DELETE",
           data: {
             loginToken: cookies.get("token"),
@@ -165,7 +179,7 @@ export default {
       this.likeDisable=true;
         if(!this.liked){
             axios.request({
-                url:"https://tweeterest.ml/api/comment-likes",
+                url:"http://127.0.0.1:5000/api/comment-likes",
                 method:"POST",
                 data:{
                     loginToken:cookies.get("token"),
@@ -186,7 +200,7 @@ export default {
         }
         else{
              axios.request({
-                url:"https://tweeterest.ml/api/comment-likes",
+                url:"http://127.0.0.1:5000/api/comment-likes",
                 method:"DELETE",
                 data:{
                     loginToken:cookies.get("token"),
