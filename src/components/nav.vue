@@ -13,8 +13,13 @@
     <router-link to="/profile"
       ><i class="fas fa-2x fa-user-circle"
         ><h1 class="desktop">Profile</h1></i
-      ></router-link
-    >
+      ></router-link>
+
+      <router-link to="/notifications"
+      ><i class="far fa-2x fa-bell">
+        <span id="notification" v-if="newNotifications > 0"> {{ newNotifications }} </span>
+      <h1 class="desktop">Notifications</h1> </i> </router-link>
+
     <router-link to="/signin"
       ><i @click="logout" class="fas fa-2x fa-sign-out-alt"
         ><h1 class="desktop">Logout</h1></i
@@ -28,6 +33,12 @@ import axios from "axios";
 import cookies from "vue-cookies";
 export default {
   name: "nav-page",
+
+  computed: {
+    newNotifications() {
+      return this.$store.getters.newNotifications; 
+    }
+  },
   methods: {
     logout() {
       axios
@@ -66,7 +77,7 @@ export default {
   position: fixed;
   bottom: 0;
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(5, 1fr);
   justify-items: center;
   align-items: center;
   a {
@@ -75,6 +86,15 @@ export default {
   a.router-link-exact-active {
     color: #1da1f2;
   }
+}
+#notification{
+  background: #f00;
+  padding: 5px;
+  font-size: 0.65em;
+  border-radius: 50%;
+  color: white;
+  vertical-align: bottom;
+  margin-left: -15px;
 }
 @media only screen and (min-width: 600px) {
   #nav {

@@ -12,6 +12,7 @@ export default new Vuex.Store({
     followingUsers: [],
     followersUsers: [],
     allUsers: [],
+    notifications:[],
     selectedUser: 0,//the user id of a specific user that the logged in user want to show his/her profile 
   },
   mutations: {
@@ -26,6 +27,9 @@ export default new Vuex.Store({
     },
     updateUsers: function (state, data) {
       state.allUsers = data;
+    },
+    updateNotifications (state,data){
+      state.notifications = data
     },
     userToShow(state, userId) {
       state.selectedUser = userId;
@@ -44,12 +48,32 @@ export default new Vuex.Store({
       state.user = {};
       state.followingUsers = [];
       state.followersUsers = [];
+      state.notifications=[];
       state.allUsers = [];
       state.selectedUser = 0;
 
     }
   },
   actions: {
+    getNotifications(context) {
+      axios.request({
+        url: "http://127.0.0.1:5000/api/notifications",
+        method: "GET",
+        params: {
+          userId: context.state.user.userId,
+        },
+        headers: {
+          "Content-Type": "application/json",
+          "X-Api-Key": "ZbUbhpzNbCXwE9Cbn4nK9zYQT1aNxPuRXkYLjJB7pqa67"
+        }
+      }).then((response) => {
+        this.commit("updateNotifications", response.data.reverse());
+      }).catch(() => {
+        alert("Somthing went wrong");
+      })
+
+
+    },
     getFollowing(context) {
       axios.request({
         url: "http://127.0.0.1:5000/api/follows",
@@ -122,6 +146,7 @@ export default new Vuex.Store({
         this.dispatch("getFollowing");
         this.dispatch("getFollowers");
         this.dispatch("getAllusers");
+        this.dispatch("getNotifications")
         if (cookies.get("selectedUser") != undefined)
           this.commit("userToShow", cookies.get("selectedUser"));
 
@@ -158,6 +183,13 @@ export default new Vuex.Store({
       return users.filter(function (user) {
         return user.userId != state.user.userId;
       })
+
+    },
+    newNotifications: function (state) {
+      let notifications = state.notifications.filter(function (notification) {
+        return notification.viewStatus==0;
+      });
+      return notifications.length;
 
     }
 

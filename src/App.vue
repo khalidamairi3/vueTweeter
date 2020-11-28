@@ -261,7 +261,7 @@ button{
     font-size: 24px;
     width: 70%;
   }
-  #home,#profile,#discoverPage,#userProfile,#profileEdit{
+  #home,#profile,#discoverPage,#userProfile,#profileEdit,#notifications{
   display: grid;
   grid-template-columns: 2fr 8fr;
 }
@@ -331,7 +331,7 @@ button{
     position: relative;
     bottom: 1vh;
   }
-    #home,#profile,#discoverPage,#userProfile,#profileEdit{
+    #home,#profile,#discoverPage,#userProfile,#profileEdit,#notifications{
   display: grid;
   grid-template-columns: 3fr 8fr 2fr;
 }

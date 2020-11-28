@@ -83,6 +83,7 @@ export default {
       this.$router.push("/signin");
     }
     this.getTweets();
+    this.$store.dispatch("getNotifications");
   },
   data() {
     return {

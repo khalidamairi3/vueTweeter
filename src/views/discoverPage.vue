@@ -59,6 +59,8 @@ export default {
     } else if (cookies.get("token") == undefined) {
       this.$router.push("/signin");
     }
+      else { this.$store.dispatch("getNotifications");
+    }
   },
   data() {
     return {

@@ -75,6 +75,7 @@ export default {
     }
     this.getUserDetails();
     this.getTweets();
+    this.$store.dispatch("getNotifications");
   },
   data() {
     return {

@@ -34,6 +34,7 @@ export default {
       this.$router.push("/signin");
     } else {
       this.tweetsReady = true;
+      this.$store.dispatch("getNotifications");
     }
   },
   computed: {
