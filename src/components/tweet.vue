@@ -1,9 +1,10 @@
 <template>
   <div data-aos="fade-down" v-bind:class="{ deleted: deleted , tweet: !deleted }"
   >
-    <p class="username" @click="selectUser(tweet.userId)">
+    <p class="username" @mouseenter="usercard =false" @mouseleave="usercard=true" @click="selectUser(tweet.userId)">
       {{ tweet.username }}
     </p>
+    <user-card :userId="tweet.userId" v-bind:class="{ shown : usercard }" />
     <p class="date">{{ tweet.createdAt }}</p>
     <div v-if="isuser">
       <i @click="editToShow(tweet.tweetId)" id="myBtn" class="far fa-edit"></i>
@@ -45,11 +46,14 @@
 import tweetComments from "./comments";
 import axios from "axios";
 import cookies from "vue-cookies";
+import userCard from "./userCard"
+
 
 export default {
   name: "tweet-display",
   components: {
-    tweetComments
+    tweetComments,
+    userCard
   },
   props: {
     Tweet: {
@@ -74,7 +78,8 @@ export default {
       editDisable: false,
       deleteDisable: false,
       likeDisable: false,
-      likedUsers: []
+      likedUsers: [],
+      usercard:true
     };
   },
   computed: {
@@ -281,6 +286,10 @@ export default {
   .view {
     grid-column: span 2;
   }
+}
+
+.shown{
+  display: none;
 }
 
 /* Modal Content/Box */

@@ -71,7 +71,7 @@ export default {
   },
   computed: {
     otherUsers() {
-      return this.$store.getters.notFollowing;
+      return this.$store.getters.getOtherUsers;
     },
     user() {
       return this.$store.state.user;
