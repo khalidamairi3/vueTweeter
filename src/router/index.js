@@ -9,6 +9,8 @@ import userProfile from "../views/userprofile";
 import editProfile from "../views/editProfile";
 import landingPage from "../views/landing"
 import notificationsPage from "../views/notifications.vue";
+import chatsView from "../views/chats"
+import messagesPage from "../views/messages";
 Vue.use(VueRouter);
 
 const routes = [
@@ -16,6 +18,16 @@ const routes = [
     path: "/signup",
     name: "signup-page",
     component: signupPage
+  },
+  {
+    path: "/messages",
+    name: "messages-page",
+    component: messagesPage
+  },
+  {
+    path: "/chats",
+    name: "chats-page",
+    component: chatsView
   },
   {
     path: "/notifications",

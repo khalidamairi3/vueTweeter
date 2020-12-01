@@ -61,6 +61,7 @@ export default {
             this.$store.dispatch("getFollowing");
             this.$store.dispatch("getFollowers");
             this.$store.dispatch("getAllusers");
+            this.$store.dispatch("getChats");
             this.err = false;
             this.disable = false;
             this.$router.push("/home");

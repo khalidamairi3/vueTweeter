@@ -13,7 +13,9 @@ export default new Vuex.Store({
     followersUsers: [],
     allUsers: [],
     notifications:[],
-    selectedUser: 0,//the user id of a specific user that the logged in user want to show his/her profile 
+    chats:[],
+    selectedUser: 0,//the user id of a specific user that the logged in user want to show his/her profile
+    selectedChat:0 
   },
   mutations: {
     setUser: function (state, user) {
@@ -31,8 +33,15 @@ export default new Vuex.Store({
     updateNotifications (state,data){
       state.notifications = data
     },
+    updateChats (state,data){
+      state.chats = data
+    },
     userToShow(state, userId) {
       state.selectedUser = userId;
+
+    },
+    chatToShow(state, chatId) {
+      state.selectedChat = chatId;
 
     },
     addFollowing(state, user) {
@@ -50,11 +59,29 @@ export default new Vuex.Store({
       state.followersUsers = [];
       state.notifications=[];
       state.allUsers = [];
+      state.chats=[];
       state.selectedUser = 0;
+      state.selectedChat = 0;
 
     }
   },
   actions: {
+    getChats() {
+      axios.request({
+        url: "http://127.0.0.1:5000/api/chats",
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          "loginToken": cookies.get("token")
+        }
+      }).then((response) => {
+        this.commit("updateChats", response.data.reverse());
+      }).catch(() => {
+        alert("Somthing went wrong");
+      })
+
+
+    },
     getNotifications(context) {
       axios.request({
         url: "http://127.0.0.1:5000/api/notifications",
@@ -146,9 +173,12 @@ export default new Vuex.Store({
         this.dispatch("getFollowing");
         this.dispatch("getFollowers");
         this.dispatch("getAllusers");
-        this.dispatch("getNotifications")
+        this.dispatch("getNotifications");
+        this.dispatch("getChats");
         if (cookies.get("selectedUser") != undefined)
           this.commit("userToShow", cookies.get("selectedUser"));
+        if (cookies.get("selectedChat") != undefined)
+          this.commit("chatToShow", cookies.get("selectedChat"));
 
       }).catch(() => {
         alert("Somthing went wrong");
@@ -191,6 +221,22 @@ export default new Vuex.Store({
       });
       return notifications.length;
 
+    },
+    selectedChatDetails(state){
+
+      for(let i=0 ; i<state.chats.length ; i++){
+        if(state.chats[i].chatId == cookies.get("selectedChat"))
+          return state.chats[i]
+      }
+
+    },
+    chatForUser(state){
+
+      for(let i=0 ; i<state.chats.length ; i++){
+        if(state.chats[i].userId == cookies.get("selectedUser") || state.chats[i].messagerId == cookies.get("selectedUser") )
+          return state.chats[i]
+      }
+      return false
     }
 
   },

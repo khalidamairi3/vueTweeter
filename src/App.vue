@@ -56,8 +56,7 @@ input{
   }
 }
 #details {
-  position: relative;
-  bottom: 10vh;
+  
   display: grid;
   grid-template-columns: 3fr 1fr;
   #username {
@@ -164,10 +163,7 @@ textarea {
     }
   }
 }
-.userDisplay{
-  position: relative;
-  bottom: 8vh;
-}
+
 
 /* The Close Button */
 .close {
@@ -261,7 +257,8 @@ button{
     font-size: 24px;
     width: 70%;
   }
-  #home,#profile,#discoverPage,#userProfile,#profileEdit,#notifications{
+  #home,#profile,#discoverPage,#userProfile,#profileEdit,#notifications, #chats-view , #messages{
+    width: 100%;
   display: grid;
   grid-template-columns: 2fr 8fr;
 }
@@ -331,7 +328,7 @@ button{
     position: relative;
     bottom: 1vh;
   }
-    #home,#profile,#discoverPage,#userProfile,#profileEdit,#notifications{
+    #home,#profile,#discoverPage,#userProfile,#profileEdit,#notifications,#chats-view,#messages{
   display: grid;
   grid-template-columns: 3fr 8fr 2fr;
 }

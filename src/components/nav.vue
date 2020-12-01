@@ -15,6 +15,10 @@
         ><h1 class="desktop">Profile</h1></i
       ></router-link>
 
+      <router-link to="/chats"
+      ><i class="far fa-comments fa-2x"><h1 class="desktop">Inbox</h1></i
+      ></router-link>
+
       <router-link to="/notifications"
       ><i class="far fa-2x fa-bell">
         <span id="notification" v-if="newNotifications > 0"> {{ newNotifications }} </span>
@@ -77,7 +81,7 @@ export default {
   position: fixed;
   bottom: 0;
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(6, 1fr);
   justify-items: center;
   align-items: center;
   a {

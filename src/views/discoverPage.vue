@@ -1,42 +1,43 @@
 <template>
   <div id="discoverPage">
-      <navBar />
-      <div>
-          <div id="cover">
-      <img
-        src="https://assets.materialup.com/uploads/f05e85d3-6423-4bbd-a956-eec379f9729b/preview-image.jpg"
-        alt="discover cover photo"
-      />
-    </div>
-    <div id="options">
-      <button
-        @click="selectTweet"
-        v-bind:class="{ selection: tweetsSelection }"
-      >
-        Tweets
-      </button>
-      <button
-        @click="selectTrending"
-        v-bind:class="{ selection: trendingSelection }"
-      >
-        Trending
-      </button>
-      <button @click="selectUser" v-bind:class="{ selection: usersSelection }">
-        Users
-      </button>
-    </div>
-    <dicoverComponent v-if="tweetsSelection" />
-    <trendingPage v-if="trendingSelection" />
-    <usersPage v-if="usersSelection" :users="otherUsers" />
-
+    <navBar />
+    <div>
+      <div id="cover">
+        <img
+          src="https://assets.materialup.com/uploads/f05e85d3-6423-4bbd-a956-eec379f9729b/preview-image.jpg"
+          alt="discover cover photo"
+        />
       </div>
+      <div id="options">
+        <button
+          @click="selectTweet"
+          v-bind:class="{ selection: tweetsSelection }"
+        >
+          Tweets
+        </button>
+        <button
+          @click="selectTrending"
+          v-bind:class="{ selection: trendingSelection }"
+        >
+          Trending
+        </button>
+        <button
+          @click="selectUser"
+          v-bind:class="{ selection: usersSelection }"
+        >
+          Users
+        </button>
+      </div>
+      <dicoverComponent v-if="tweetsSelection" />
+      <trendingPage v-if="trendingSelection" />
+      <usersPage v-if="usersSelection" :users="otherUsers" />
+    </div>
     <addsPage />
-    
   </div>
 </template>
 
 <script>
-import addsPage from "../components/adds"
+import addsPage from "../components/adds";
 import cookies from "vue-cookies";
 import navBar from "../components/nav";
 import trendingPage from "../components/trending";
@@ -49,8 +50,7 @@ export default {
     trendingPage,
     usersPage,
     navBar,
-    addsPage
-
+    addsPage,
   },
   mounted() {
     // in case of refresh restore the data in vuex and wait for sometime so changes can be reflected in the component
@@ -58,15 +58,15 @@ export default {
       this.$store.dispatch("restart");
     } else if (cookies.get("token") == undefined) {
       this.$router.push("/signin");
-    }
-      else { this.$store.dispatch("getNotifications");
+    } else {
+      this.$store.dispatch("getNotifications");
     }
   },
   data() {
     return {
       tweetsSelection: true,
       trendingSelection: false,
-      usersSelection: false
+      usersSelection: false,
     };
   },
   computed: {
@@ -75,7 +75,7 @@ export default {
     },
     user() {
       return this.$store.state.user;
-    }
+    },
   },
   methods: {
     selectTweet() {
@@ -89,20 +89,17 @@ export default {
     selectUser() {
       this.tweetsSelection = false;
       (this.trendingSelection = false), (this.usersSelection = true);
-    }
-  }
+    },
+  },
 };
 </script>
 
 <style lang="scss" scoped>
 #discoverPage {
   width: 100%;
-
 }
-#options{
-        position: relative;
-        bottom: 0;
-    }
-
-
+#options {
+  position: relative;
+  bottom: 0;
+}
 </style>
