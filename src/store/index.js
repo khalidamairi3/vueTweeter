@@ -68,7 +68,7 @@ export default new Vuex.Store({
   actions: {
     getChats() {
       axios.request({
-        url: "http://127.0.0.1:5000/api/chats",
+        url: "https://tweeeter.ml/api/chats",
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -84,7 +84,7 @@ export default new Vuex.Store({
     },
     getNotifications(context) {
       axios.request({
-        url: "http://127.0.0.1:5000/api/notifications",
+        url: "https://tweeeter.ml/api/notifications",
         method: "GET",
         params: {
           userId: context.state.user.userId,
@@ -103,7 +103,7 @@ export default new Vuex.Store({
     },
     getFollowing(context) {
       axios.request({
-        url: "http://127.0.0.1:5000/api/follows",
+        url: "https://tweeeter.ml/api/follows",
         method: "GET",
         params: {
           userId: context.state.user.userId,
@@ -122,7 +122,7 @@ export default new Vuex.Store({
     },
     getFollowers(context) {
       axios.request({
-        url: "http://127.0.0.1:5000/api/followers",
+        url: "https://tweeeter.ml/api/followers",
         method: "GET",
         params: {
           userId: context.state.user.userId,
@@ -142,7 +142,7 @@ export default new Vuex.Store({
 
     getAllusers() {
       axios.request({
-        url: "http://127.0.0.1:5000/api/users",
+        url: "https://tweeeter.ml/api/users",
         method: "GET",
         headers: {
           "X-Api-Key": "ZbUbhpzNbCXwE9Cbn4nK9zYQT1aNxPuRXkYLjJB7pqa67"
@@ -158,7 +158,7 @@ export default new Vuex.Store({
     //this function to be called in case of refresh
     restart() {
       axios.request({
-        url: "http://127.0.0.1:5000/api/users",
+        url: "https://tweeeter.ml/api/users",
         method: "GET",
         headers: {
           "Content-Type": "application/json",
