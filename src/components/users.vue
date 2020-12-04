@@ -1,7 +1,7 @@
 <template>
   <div id="users">
     <div id="search">
-       <label for="search"> Enter username </label>
+       <label for="search"> Enter username:  </label>
       <input name="search" type="text" @input="search" v-model="searched">    
     </div>
    
@@ -71,12 +71,20 @@ export default {
   }
 }
 #search{
-  margin-top:5vh;
+  margin:5vh 0;
   width: 80%;
   display: grid;
-  grid-template-columns: 1fr 3fr;
+  grid-template-columns: 2fr 3fr;
+  label{
+    justify-self: end;
+    align-self: center;
+  }
   input{
+    width: 100%;
+    height: 30px;
     border: 1px solid #1da1f2 ;
+    align-self: center;
+    justify-self: start;
   }
 }
 .shown{

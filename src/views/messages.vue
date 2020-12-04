@@ -44,6 +44,15 @@ export default {
     addsPage,
   },
   async mounted() {
+      if (this.user.userId == undefined && cookies.get("token") != undefined) {
+      this.$store.dispatch("restart");
+       await wait(1000)
+      this.tweetsReady = true;
+    } else if (cookies.get("token") == undefined) {
+      this.$router.push("/signin");
+    } else {
+      this.$store.dispatch("getNotifications");
+    }
       let load =true
       while (load==true){
           this.getMessages();
@@ -70,10 +79,13 @@ export default {
     chat() {
       return this.$store.getters.selectedChatDetails;
     },
+     user() {
+      return this.$store.state.user;
+    },
   },
   methods: {
     getMessages() {
-        if(cookies.get("token") != undefined && cookies.get("selectedChat") != undefined){
+        if(cookies.get("token") != undefined && cookies.get("selectedChat") != undefined && this.$route.name == "messages-page"){
       axios
         .request({
           url: "http://127.0.0.1:5000/api/messages",

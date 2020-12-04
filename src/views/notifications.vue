@@ -3,6 +3,7 @@
     <navBar />
     <div>
       <h1 id="notification-header">Notifications</h1>
+      <h4 style="text-align:center" v-if="notifications.length ==0"> You have no notifications yet</h4>
       <notificationItem
         v-for="notification in notifications"
         :key="notification.notificationId"
@@ -57,6 +58,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+#notifications{
+  width: 100%;
+}
 #notification-header {
   width: 100%;
   border-bottom: 1px solid;

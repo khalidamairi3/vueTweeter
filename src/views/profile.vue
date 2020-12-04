@@ -9,10 +9,6 @@
           alt="porfile cover photo"
         />
       </div>
-      <div id="initilals">
-        <h1 v-if="user.username != undefined">{{ user.username[0] }}</h1>
-      </div>
-
       <div id="details">
         <p id="username">{{ user.username }}</p>
         <button @click="edit">Edit</button>

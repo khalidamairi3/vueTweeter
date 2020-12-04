@@ -11,6 +11,7 @@
   Add a comment </textarea
       >
       <i
+        style="cursor:pointer"
         @click="postComment(tweetId, content)"
         id="toComment"
         class="fas fa-2x fa-chevron-circle-right"

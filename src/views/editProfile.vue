@@ -45,7 +45,8 @@ export default {
 }
 
 #editContent{
-  width: 100%;
+  width: 95%;
+  max-width: 700px;
   padding-bottom: 10vh ;
 }
 </style>

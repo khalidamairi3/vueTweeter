@@ -124,6 +124,7 @@ export default {
   #login {
     margin-top: 10vh ;
     height: 80vh;
+    max-height: 500px;
     width: 50vw;
   }
 }

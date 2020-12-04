@@ -284,7 +284,12 @@ export default {
   }
 
   .view {
+    cursor: pointer;
     grid-column: span 2;
+    &:hover{
+       color: #1da1f2;
+
+    }
   }
 }
 

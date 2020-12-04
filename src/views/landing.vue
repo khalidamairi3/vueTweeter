@@ -44,6 +44,7 @@ export default {
 
 <style lang="scss" scoped>
 #landing {
+  display: grid;
   width: 100%;
   img {
     position: absolute;
@@ -76,7 +77,7 @@ export default {
 }
 
 #choices {
-  margin-left: 25vw;
+  justify-self: center;
   width: 50vw;
   height: 50vh;
   display: grid;
@@ -92,8 +93,9 @@ export default {
     border-radius: 15px 15px 15px 15px;
     border: 1px solid #1da1f2;
     text-transform: capitalize;
-    letter-spacing: 0.4vw;
+    letter-spacing: 0.2vw;
     margin-bottom: 2vh;
+    
 
     &:hover {
       border: 1px solid #1da1f2;
@@ -148,4 +150,13 @@ export default {
     opacity: 0;
   }
 }
+
+@media only screen and(min-width: 600px) {
+
+  button{
+    font-size: 1.2em;
+  }
+  
+}
+
 </style>

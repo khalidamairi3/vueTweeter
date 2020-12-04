@@ -11,6 +11,7 @@
   Add a reply </textarea
       >
       <i
+        style="cursor:pointer"
         @click="postComment(commentId, content)"
         id="toReply"
         class="fas fa-2x fa-chevron-circle-right"

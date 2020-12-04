@@ -17,8 +17,10 @@ export default {
 
 <style scoped>
 #signup{
-  width: 100%;
-  height: 100vh;
+  width: 80%;
+  height: fit-content;
+  max-width: 600px;
+  margin: 5vh 0;
   display: grid;
   justify-items: center;
   align-items: center;

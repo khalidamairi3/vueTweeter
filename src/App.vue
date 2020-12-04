@@ -21,6 +21,9 @@ body {
   padding: 0;
   margin: 0;
 }
+button{
+  cursor: pointer;
+}
 input{
   outline: none;
 }
@@ -96,8 +99,7 @@ input{
   }
 }
 #options {
-  position: relative;
-  bottom: 8vh;
+
   width: 100%;
   border-top: 2px solid #e1e8ed;
   button {
