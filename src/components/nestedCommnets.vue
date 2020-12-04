@@ -49,7 +49,7 @@ export default {
     getComments() {
       axios
         .request({
-          url: "http://127.0.0.1:5000/api/comments",
+          url: "https://tweeeter.ml/api/comments",
           method: "GET",
           params: {
             commentId: this.commentId
@@ -73,7 +73,7 @@ export default {
       this.disable = true;
       axios
         .request({
-          url: "http://127.0.0.1:5000/api/comments",
+          url: "https://tweeeter.ml/api/comments",
           method: "POST",
           data: {
             loginToken: cookies.get("token"),

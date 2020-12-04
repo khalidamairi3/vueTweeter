@@ -34,7 +34,7 @@ export default {
       this.disable = true;
       axios
         .request({
-          url: "http://127.0.0.1:5000/api/tweets",
+          url: "https://tweeeter.ml/api/tweets",
           method: "POST",
           data: {
             loginToken: cookies.get("token"),

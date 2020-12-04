@@ -25,7 +25,7 @@ export default {
     getTrendingTweets() {
       axios
         .request({
-          url: "http://127.0.0.1:5000/api/tweets",
+          url: "https://tweeeter.ml/api/tweets",
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -37,7 +37,7 @@ export default {
           for (let i = 0; i < this.tweets.length; i++) {
             axios
               .request({
-                url: "http://127.0.0.1:5000/api/tweet-likes",
+                url: "https://tweeeter.ml/api/tweet-likes",
                 method: "GET",
                 params: {
                   tweetId: this.tweets[i].tweetId

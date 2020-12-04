@@ -47,7 +47,7 @@ export default {
     logout() {
       axios
         .request({
-          url: "http://127.0.0.1:5000/api/login",
+          url: "https://tweeeter.ml/api/login",
           method: "DELETE",
           data: {
             loginToken: cookies.get("token")

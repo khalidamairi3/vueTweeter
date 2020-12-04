@@ -91,7 +91,7 @@ export default {
     checkLiked() {
       axios
         .request({
-          url: "http://127.0.0.1:5000/api/tweet-likes",
+          url: "https://tweeeter.ml/api/tweet-likes",
           method: "GET",
           params: {
             tweetId: this.tweet.tweetId
@@ -155,7 +155,7 @@ export default {
       this.editDisable = true;
       axios
         .request({
-          url: "http://127.0.0.1:5000/api/tweets",
+          url: "https://tweeeter.ml/api/tweets",
           method: "PATCH",
           data: {
             loginToken: cookies.get("token"),
@@ -185,7 +185,7 @@ export default {
       this.deleteDisable = true;
       axios
         .request({
-          url: "http://127.0.0.1:5000/api/tweets",
+          url: "https://tweeeter.ml/api/tweets",
           method: "DELETE",
           data: {
             loginToken: cookies.get("token"),
@@ -213,7 +213,7 @@ export default {
       if (!this.liked) {
         axios
           .request({
-            url: "http://127.0.0.1:5000/api/tweet-likes",
+            url: "https://tweeeter.ml/api/tweet-likes",
             method: "POST",
             data: {
               loginToken: cookies.get("token"),
@@ -236,7 +236,7 @@ export default {
       } else {
         axios
           .request({
-            url: "http://127.0.0.1:5000/api/tweet-likes",
+            url: "https://tweeeter.ml/api/tweet-likes",
             method: "DELETE",
             data: {
               loginToken: cookies.get("token"),

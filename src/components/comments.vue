@@ -10,6 +10,7 @@
       <textarea v-model="content" placeholder="add a comment">
   Add a comment </textarea
       >
+    
       <i
         style="cursor:pointer"
         @click="postComment(tweetId, content)"
@@ -49,7 +50,7 @@ export default {
     getComments() {
       axios
         .request({
-          url: "http://127.0.0.1:5000/api/comments",
+          url: "https://tweeeter.ml/api/comments",
           method: "GET",
           params: {
             tweetId: this.tweetId
@@ -73,7 +74,7 @@ export default {
       this.disable = true;
       axios
         .request({
-          url: "http://127.0.0.1:5000/api/comments",
+          url: "https://tweeeter.ml/api/comments",
           method: "POST",
           data: {
             loginToken: cookies.get("token"),

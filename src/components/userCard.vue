@@ -39,7 +39,7 @@ import axios from "axios"
                     }
                     this.ready=false
                     axios.request({
-                        url:"http://127.0.0.1:5000/api/users",
+                        url:"https://tweeeter.ml/api/users",
                         method:"GET",
                         params:{
                             userId : this.userId

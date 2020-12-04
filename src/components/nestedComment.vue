@@ -65,7 +65,7 @@ export default {
   methods: {
     checkliked(){
       axios.request({
-      url:"http://127.0.0.1:5000/api/comment-likes",
+      url:"https://tweeeter.ml/api/comment-likes",
       method: "GET",
       params:{
         commentId:this.comment.commentCommentId
@@ -109,7 +109,7 @@ export default {
       console.log(id + content);
       this.editDisable=true;
       axios.request({
-          url: "http://127.0.0.1:5000/api/comments",
+          url: "https://tweeeter.ml/api/comments",
           method: "PATCH",
           data: {
             loginToken: cookies.get("token"),
@@ -138,7 +138,7 @@ export default {
       }
       this.deleteDisable=true
       axios.request({
-          url: "http://127.0.0.1:5000/api/comments",
+          url: "https://tweeeter.ml/api/comments",
           method: "DELETE",
           data: {
             loginToken: cookies.get("token"),
@@ -165,7 +165,7 @@ export default {
       this.likeDisable=true;
         if(!this.liked){
             axios.request({
-                url:"http://127.0.0.1:5000/api/comment-likes",
+                url:"https://tweeeter.ml/api/comment-likes",
                 method:"POST",
                 data:{
                     loginToken:cookies.get("token"),
@@ -186,7 +186,7 @@ export default {
         }
         else{
              axios.request({
-                url:"http://127.0.0.1:5000/api/comment-likes",
+                url:"https://tweeeter.ml/api/comment-likes",
                 method:"DELETE",
                 data:{
                     loginToken:cookies.get("token"),

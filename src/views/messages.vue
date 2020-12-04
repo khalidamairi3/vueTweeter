@@ -88,7 +88,7 @@ export default {
         if(cookies.get("token") != undefined && cookies.get("selectedChat") != undefined && this.$route.name == "messages-page"){
       axios
         .request({
-          url: "http://127.0.0.1:5000/api/messages",
+          url: "https://tweeeter.ml/api/messages",
           method: "GET",
           params: {
             chatId: this.chatId,
@@ -112,7 +112,7 @@ export default {
         this.disable=true
         axios
         .request({
-          url: "http://127.0.0.1:5000/api/messages",
+          url: "https://tweeeter.ml/api/messages",
           method: "POST",
           data: {
             chatId:chatId,
